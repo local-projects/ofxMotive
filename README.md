@@ -1,17 +1,29 @@
-ofxAddonTemplate
-================
+# ofxMotive
 
-OpenFrameworks addon template for easier development of structurally correct addons.
+This addon allows for easy access to Optitrack Motive's API for accessing 2D and 3D optical motion capture data
 
-This template aids you as an addon author in creating an addon in a "proper" way. Doing this enables the openFrameworks community to easily use your addon, and having addons adhere to an established structure makes it easier for the openFrameworks developers to create features around contributed addons, like the addons index at ofxaddons.com.
+## Dependencies
 
-Download
---------
-The template contains all you need to start developing your addon. Download the template using the Download button on the right side of the github page. Unzip, rename and copy it to your addons folder.
-**PLEASE DON'T FORK** the addon template repo if you plan on creating your own addon, this will lead to confusion on the Github inheritance/forking graph, and you will unnecessarily have this repository's history in your own git repo.
+1. Motive API
+2. Camera SDK
 
-Further Steps
--------------
+Since Motive only works in Windows, this addon has only been developed on Windows 10 with Visual Studios 2017.
+
+## How to use this addon with your project
+
+1. Add this addon to your addons file
+2. Generate your OF project with the Project Generator
+3. In Visual Studio, click on your project in the Solution Explorer, the click the wrench icon at the top to edit its Properties. Set *Configuration* to *All Configurations* and *Platform* to *All Platforms*
+4. Under *Configuration Properties > C/C++ > General > Additional Include Directories*, add `$(NPTRACKINGTOOLS_INC)` and `$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include`. These should resolve into `C:\Program Files\OptiTrack\Motive\inc` and `\SharedLibraries\RigidBodySolver\Include`, respectively.
+5. Under *Configuration Properties > Linker > General > Additional Include Directories*, add `$(NPTRACKINGTOOLS_LIB)`. This should resolve into `C:\Program Files\OptiTrack\Motive`. (Also add `C:\Program Files\OptiTrack\Motive` and `C:\Program Files\OptiTrack\Motive\plugins\platforms`?)
+6. Under *Configuration Properties > Linker > Input*, add `NPTrackingToolsx64.lib` for a 64 bit architecture. 
+7. Copy all files from the folder within this addon titled *Motive2.1 Required Libraries* into your project's executable directory (*bin*). The files that will be copied include those in the below image. It is crucial for these files to be accessible at the same file structure level as the executable itself. For more information, [see this page](https://v21.wiki.optitrack.com/index.php?title=Motive_API:_Quick_Start_Guide#Library_Files).
+
+![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
+
+
+## Additional Resources
+
 `README_AUTHOR.md` contains instructions and explanations for you.
 `README_DEPLOY.md` is filled with a template for an informative README file you might want to use with your addon.
 
