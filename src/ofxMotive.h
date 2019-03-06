@@ -22,40 +22,40 @@ enum MotiveState {
 class ofxMotive : private ofThread {
 public:
 
-	/// \brief Create an object to connect with motive's cameras. There should only be one per program.
+	///// \brief Create an object to connect with motive's cameras. There should only be one per program.
 	ofxMotive();
 
-	/// \brief Setup the RUI Params associated with this addon
+	///// \brief Setup the RUI Params associated with this addon
 	void setupParams();
 
-	/// \brief Begin streaming and reconstructing information from the cameras
+	///// \brief Begin streaming and reconstructing information from the cameras
 	void start();
 
-	/// \brief Check if we're connected to the cameras and streaming info
-	bool isConnected();
+	///// \brief Check if we're connected to the cameras and streaming info
+	//bool isConnected();
 
-	/// \brief Stop streaming and reconstructing
+	///// \brief Stop streaming and reconstructing
 	void stop();
 
-	/// \brief Get the state of this addon
-	MotiveState getState();
+	///// \brief Get the state of this addon
+	//MotiveState getState();
 
-	/// \brief Get the number of connected cameras
-	void getNumCameras();
-	
-	/// \brief Get a pointer to all camera objects
-	CameraList* getCameras();
+	///// \brief Get the number of connected cameras
+	//void getNumCameras();
+	//
+	///// \brief Get a pointer to all camera objects
+	////CameraList* getCameras();
 
-	/// \brief Get the observed 2D points from a specific camera feed
-	vector<glm::vec2> get2DPoints(int camID);
+	///// \brief Get the observed 2D points from a specific camera feed
+	//vector<glm::vec2> get2DPoints(int camID);
 
-	/// \brief Get the reconstructed 3D points
-	vector<glm::vec3> get3DPoints();
+	///// \brief Get the reconstructed 3D points
+	//vector<glm::vec3> get3DPoints();
 
 
 private:
 
-	CameraList cams;
+	//CameraList cams;
 
 
 
