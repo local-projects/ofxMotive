@@ -15,18 +15,24 @@
 
 enum MotiveState {
 	MOTIVE_DISCONNECTED = 0,
-	MOTIVE_CONNECTING,
+	MOTIVE_TRY_CONNECT,
 	MOTIVE_CONNECTED,
 };
 
 class ofxMotive : private ofThread {
 public:
 
+	/// \brief Create an object to connect with motive's cameras. There should only be one per program.
+	ofxMotive();
+
 	/// \brief Setup the RUI Params associated with this addon
 	void setupParams();
 
 	/// \brief Begin streaming and reconstructing information from the cameras
 	void start();
+
+	/// \brief Check if we're connected to the cameras and streaming info
+	bool isConnected();
 
 	/// \brief Stop streaming and reconstructing
 	void stop();
