@@ -14,9 +14,15 @@ Since Motive only works in Windows, this addon has only been developed on Window
 1. Add this addon to your addons file
 2. Generate your OF project with the Project Generator
 3. In Visual Studio, click on your project in the Solution Explorer, the click the wrench icon at the top to edit its Properties. Set *Configuration* to *All Configurations* and *Platform* to *All Platforms*
-4. Under *Configuration Properties > C/C++ > General > Additional Include Directories*, add `$(NPTRACKINGTOOLS_INC)` and `$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include`. These should resolve into `C:\Program Files\OptiTrack\Motive\inc` and `\SharedLibraries\RigidBodySolver\Include`, respectively.
-5. Under *Configuration Properties > Linker > General > Additional Include Directories*, add `$(NPTRACKINGTOOLS_LIB)`. This should resolve into `C:\Program Files\OptiTrack\Motive`. (Also add `C:\Program Files\OptiTrack\Motive` and `C:\Program Files\OptiTrack\Motive\plugins\platforms`?)
-6. Under *Configuration Properties > Linker > Input*, add `NPTrackingToolsx64.lib` for a 64 bit architecture. 
+4. Under *Configuration Properties > C/C++ > General > Additional Include Directories*, add
+   - `$(NPTRACKINGTOOLS_INC)` (this resolves into `C:\Program Files\OptiTrack\Motive\inc`)
+   - `$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include` (this resolves into `\SharedLibraries\RigidBodySolver\Include`)
+5. Under *Configuration Properties > Linker > General > Additional Include Directories*, add 
+   - `$(NPTRACKINGTOOLS_LIB)` (this should resolve into `C:\Program Files\OptiTrack\Motive\lib`)
+   - `C:\Program Files\OptiTrack\Motive`
+   - `C:\Program Files\OptiTrack\Motive\plugins\platforms`
+6. Under *Configuration Properties > Linker > Input*, add 
+   - `NPTrackingToolsx64.lib` for a 64 bit architecture
 7. Copy all files from the folder within this addon titled *Motive2.1 Required Libraries* into your project's executable directory (*bin*). The files that will be copied include those in the below image. It is crucial for these files to be accessible at the same file structure level as the executable itself. For more information, [see this page](https://v21.wiki.optitrack.com/index.php?title=Motive_API:_Quick_Start_Guide#Library_Files).
 
 ![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
