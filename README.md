@@ -1,13 +1,22 @@
 # ofxMotive
 
+## Introduction
+
 This addon allows for easy access to Optitrack Motive's API for accessing 2D and 3D optical motion capture data
 
-## Dependencies
-
-1. Motive API
-2. Camera SDK
+### Systems
 
 Since Motive only works in Windows, this addon has only been developed on Windows 10 with Visual Studios 2017.
+
+### Dependencies
+
+1. Motive API
+2. [Camera SDK](https://optitrack.com/products/camera-sdk/)
+
+#### Installation
+
+1. Ensure Motive has been downloaded, installed and has a valid license. By default, its program files should be installed to `C:\Program Files\OptiTrack\Motive`
+2. Download the Camera SDK to a convenient location.
 
 ## How to use this addon with your project
 
@@ -27,15 +36,12 @@ Since Motive only works in Windows, this addon has only been developed on Window
 
 ![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
 
+## Reference
 
-## Additional Resources
+Useful reference materials include the wikis for both API's:
 
-`README_AUTHOR.md` contains instructions and explanations for you.
-`README_DEPLOY.md` is filled with a template for an informative README file you might want to use with your addon.
+- Motive API [wiki](https://v20.wiki.optitrack.com/index.php?title=Motive_API)
+- Camera SDK [wiki](https://v20.wiki.optitrack.com/index.php?title=Camera_SDK)
 
-Before announcing your addon to the world, you should remove this file (`README.md`) and the author instructions, and rename `README_DEPLOY.md` to `README.md`.
-Also, if you have special instructions which people should see when submitting a pull request or open an issue in your addon repository, add a `CONTRIBUTING.md` file at the root of your repository. For more details, see https://github.com/blog/1184-contributing-guidelines
 
-This template reflects the help text found at http://ofxaddons.com/howto, and will be updated from time to time by the OF developers.
 
-Thanks for listening, and happy coding!
