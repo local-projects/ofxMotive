@@ -18,10 +18,22 @@ public:
 
 	void update();
 
-	int getNumActiveCameras() { return nActiveCams; };
-	int getNumObservedCameras() { return cams.size(); };
+	//int getNumActiveCameras() { return nActiveCams; };
+	int getNumCameras() { return cams.size(); };
 
 	bool camExists(int serial);
+
+	// Remove Accumulated latency
+	void flushQueues();
+
+	// Get the list of all active cameras
+	vector<MotiveCamera*> getActiveCameras();
+
+	// Get a specific camera, and don't create if new
+	MotiveCamera* getCameraFromSerial(int serial);
+
+	// TODO: Set settings of all cameras at once
+
 
 private:
 

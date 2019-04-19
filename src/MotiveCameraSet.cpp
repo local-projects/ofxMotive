@@ -108,6 +108,9 @@ void MotiveCameraSet::update() {
 		// Get all relevant information for this camera that isn't going to change every frame
 		cam->index = serial2Index[cam->serial];
 		cam->name = TT_CameraName(cam->index);
+		cam->ID = TT_CameraID(cam->index);
+		// camera state
+		TT_CameraState(cam->index, cam->camState);
 		// location
 		cam->position.x = TT_CameraXLocation(cam->index);
 		cam->position.y = TT_CameraYLocation(cam->index);
@@ -121,65 +124,72 @@ void MotiveCameraSet::update() {
 		}
 		cam->orientation = getQuaternion(mat);
 		// pixel resolution
+		int width, height;
+		if (TT_CameraPixelResolution(cam->index, width, height)) {
+			cam->resolution.x = width;
+			cam->resolution.y = height;
+		}
+		// frame rate
+		cam->frameRate = TT_CameraFrameRate(cam->index);
+		// video type
+		cam->setVideoType(TT_CameraVideoType(cam->index));
 		// exposure
+		cam->exposure = TT_CameraExposure(cam->index);
 		// threshold
+		cam->threshold = TT_CameraThreshold(cam->index);
 		// intensity
+		cam->intensity = TT_CameraIntensity(cam->index);
 		// imager gain
+		cam->imagerGain = TT_CameraImagerGain(cam->index);
+		cam->imagerGainLevels = TT_CameraImagerGainLevels(cam->index);
 		// mask settings
-		// camera id
 
 		// Create new parameter groups
-
+		ofLogNotice("Camera Set") << "Adding new camera " << cam->serial;
+		cam->setupParams();
 	}
-
-
 
 	// Now, process all current cameras
 	for (int i = 0; i < activeCams.size(); i++) {
+		MotiveCamera* cam = getCamera(activeCams[i]);
+		cam->bConnected = true; // redundant
+
+		// Update their active index
+		cam->index = serial2Index[cam->serial];
+		cam->ID = TT_CameraID(cam->index);
+
+		// Update all information that changes every frame
+		cam->clearFrameData();
+		// 2d markers
+		int nMarkers2DRaw = TT_CameraMarkerCount(cam->index);
+		for (int i = 0; i < nMarkers2DRaw; i++) {
+			glm::vec2 tmp;
+			if (TT_CameraMarker(cam->index, i, tmp.x, tmp.y)) {
+				cam->markers2DRaw.push_back(tmp);
+			}
+		}
+		//  3d markers / projected location
+
+
+		// temperature
+		cam->temperature = TT_CameraTemperature(cam->index);
+
+		// Set all new information
+		// push changes to this camera
+		if (cam->bPushSettings) {
+			cam->bPushSettings = false;
+			cam->pushSettings();
+			RUI_PUSH_TO_CLIENT();
+		}
+
+		// Set or clear a mask
+
 
 	}
-
-
-	// Update their active index
-	// Update all information that changes every frame
-	// Set all new information
-
-	// marker count, markers, projected location
-	// frame rate
-	// video type
-	// temperature
-	// camera state
-
-
-
-
-
-
-	// push changes to this camera
-	// camera settings
-	// camera frame rate
-	// camera video type
-	// automatic gain control 
-	// automatic exposure control
-	// mjpeg quality
-	// set imager gain
-	// set mask
-	// set camera state
-	// save a frame
-
-
-		// Get this camera
-		//int serial = TT_CameraSerial(index);
-		//if (!camExists(serial)) {
-		//	ofLogNotice("Motive Camera Set") << "Adding camera with serial number " << ofToString(serial);
-		//}
-
-
-
 }
 
 // --------------------------------------------------------
-glm::quat getQuaternion(glm::mat3& rotMat) {
+glm::quat MotiveCameraSet::getQuaternion(glm::mat3& rotMat) {
 
 	// Implementation from:
 	// http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/
@@ -216,13 +226,28 @@ glm::quat getQuaternion(glm::mat3& rotMat) {
 			q.z = 0.25f * s;
 		}
 	}
+	return q;
 }
 
 // --------------------------------------------------------
+void MotiveCameraSet::flushQueues() {
+	TT_FlushCameraQueues();
+}
 
 // --------------------------------------------------------
+vector<MotiveCamera*> MotiveCameraSet::getActiveCameras() {
+	vector<MotiveCamera*> out;
+	for (int i = 0; i < activeCams.size(); i++) {
+		out.push_back(getCamera(activeCams[i]));
+	}
+	return out;
+}
 
 // --------------------------------------------------------
+MotiveCamera* MotiveCameraSet::getCameraFromSerial(int serial) {
+	if (!camExists(serial)) return NULL;
+	return getCamera(serial);
+}
 
 // --------------------------------------------------------
 

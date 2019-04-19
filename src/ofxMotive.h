@@ -13,6 +13,8 @@
 //#endif
 
 #include "ofxRemoteUIServer.h"
+#include "MotiveCameraSet.h"
+
 
 enum MotiveState {
 	MOTIVE_DISCONNECTED = 0,
@@ -53,10 +55,10 @@ public:
 	MotiveState getState();
 
 	/// \brief Get the number of connected cameras
-	void getNumCameras();
+	int getNumCameras();
 	
 	/// \brief Get a pointer to all camera objects
-	//CameraList* getCameras();
+	MotiveCameraSet* getCameras();
 
 	/// \brief Get the observed 2D points from a specific camera feed
 	vector<glm::vec2> get2DPoints(int camID);
@@ -65,8 +67,9 @@ public:
 	vector<glm::vec3> get3DPoints();
 
 	/// \brief Draw any debug info
-	void drawDebugInfo();
+	//void drawDebugInfo();
 
+	
 
 private:
 
@@ -93,6 +96,8 @@ private:
 	string profilePath = ""; // should be a .motive file (actually xml)
 	bool bForceLoadProfile = false;
 	bool loadProfile();
+	bool bSaveProfile = false;
+	bool saveProfile();
 
 	string calibrationPath = ""; // should be a .cal file
 	bool bForceLoadCalibration = false;
@@ -105,7 +110,12 @@ private:
 	void processNewData();
 	bool bProcessAllFrames = true;
 
-	void updateCameraInfo();
+	MotiveCameraSet cameras;
+
+	bool bFlushCameraQueues = false;
+
+	void update3DPoints();
+	
 
 
 };

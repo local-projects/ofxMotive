@@ -20,12 +20,14 @@ void ofxMotive::setupParams() {
 	RUI_SHARE_PARAM_WCN("Max Try Connect Attempts", maxTryConnectAttempts, 1, 10);
 	RUI_SHARE_PARAM_WCN("Profile Path", profilePath);
 	RUI_SHARE_PARAM_WCN("Reload Profile", bForceLoadProfile);
+	RUI_SHARE_PARAM_WCN("Save Profile", bSaveProfile);
+	RUI_SHARE_PARAM_WCN("Calibration Path", calibrationPath);
+	RUI_SHARE_PARAM_WCN("Reload Calibration", bForceLoadCalibration);
 	RUI_SHARE_PARAM_WCN("Force Disconnect", bForceDisconnect);
 	RUI_SHARE_PARAM_WCN("Process All Frames", bProcessAllFrames);
+	RUI_SHARE_PARAM_WCN("Flush Camera Queues", bFlushCameraQueues);
 
-	// flush the queues
-
-
+	cameras.setupParams();
 }
 
 // --------------------------------------------------------------
@@ -131,13 +133,25 @@ bool ofxMotive::shutdown() {
 // --------------------------------------------------------------
 bool ofxMotive::loadProfile() {
 	if (profilePath == "") return false;
-	return isSuccess(TT_LoadProfile(profilePath.c_str()), "Load Profile");
+	bool success = isSuccess(TT_LoadProfile(profilePath.c_str()), "Load Profile");
+	if (success) ofLogNotice("ofxMotive") << "Loaded Profile: " << profilePath;
+	return success;
+}
+
+// --------------------------------------------------------------
+bool ofxMotive::saveProfile() {
+	if (profilePath == "") return false;
+	bool success = isSuccess(TT_SaveProfile(profilePath.c_str()), "Save Profile");
+	if (success) ofLogNotice("ofxMotive") << "Saved Profile: " << profilePath;
+	return success;
 }
 
 // --------------------------------------------------------------
 bool ofxMotive::loadCalibration() {
 	if (calibrationPath == "") return false;
-	return isSuccess(TT_LoadCalibration(calibrationPath.c_str()), "Load Calibration");
+	bool success = isSuccess(TT_LoadCalibration(calibrationPath.c_str()), "Load Calibration");
+	if (success) ofLogNotice("ofxMotive") << "Loaded Calibration: " << calibrationPath;
+	return success;
 }
 
 // --------------------------------------------------------------
@@ -156,10 +170,25 @@ void ofxMotive::threadedFunction() {
 			RUI_PUSH_TO_CLIENT();
 			loadProfile();
 		}
+		if (bSaveProfile) {
+			bSaveProfile = false;
+			RUI_PUSH_TO_CLIENT();
+			saveProfile();
+		}
+		if (bForceLoadCalibration) {
+			bForceLoadCalibration = false;
+			RUI_PUSH_TO_CLIENT();
+			loadCalibration();
+		}
 		if (bForceDisconnect) {
 			bForceDisconnect = false;
 			RUI_PUSH_TO_CLIENT();
 			disconnect();
+		}
+		if (bFlushCameraQueues) {
+			bFlushCameraQueues = false;
+			RUI_PUSH_TO_CLIENT();
+			cameras.flushQueues();
 		}
 
 		// Do something different depending on the state
@@ -171,6 +200,11 @@ void ofxMotive::threadedFunction() {
 			if (thisTime - lastTryConnectTime >= tryConnectTimestep) {
 				lastTryConnectTime = thisTime;
 				tryConnectCounter++;
+
+				ofLogNotice("ofxMotive") << "Motive is attempting to connect...";
+
+				// Check if the license is already being used
+				isSuccess(TT_TestSoftwareMutex(), "Test Software Mutex");
 
 				// Try to initialize the system
 				if (initialize()) {
@@ -222,10 +256,11 @@ void ofxMotive::processNewData() {
 	while (update(bProcessAllFrames)) {
 
 		// Update the camera information (fps, serial numbers, etc.)
-
-
+		cameras.update();
 
 		// Get the 3D information
+		
+
 		// TT_FrameMarkerCount()
 		// x,y,z,residual,label
 		// which cameras are contributing?
@@ -240,29 +275,23 @@ void ofxMotive::processNewData() {
 }
 
 // --------------------------------------------------------------
-void ofxMotive::updateCameraInfo() {
-	
-	// Get the total number of cameras
-	//int nCameras = 
-	//for (int index = 0; index < )
-
-
-	// If we have a different number of cameras, update the list we're storing
-
-	// Once a second, match the serial numbers
-
-
-	// Iterate through all cameras
-
-
-
+MotiveCameraSet* ofxMotive::getCameras() {
+	return &cameras;
 }
 
 // --------------------------------------------------------------
+int ofxMotive::getNumCameras() {
+	return cameras.getNumCameras();
+}
 
 // --------------------------------------------------------------
-
-// --------------------------------------------------------------
+vector<glm::vec2> ofxMotive::get2DPoints(int serial) {
+	vector<glm::vec2> out;
+	if (cameras.camExists(serial)) {
+		out = cameras.getCameraFromSerial(serial)->markers2DRaw;
+	}
+	return out;
+}
 
 // --------------------------------------------------------------
 
