@@ -25,6 +25,7 @@ public:
 
 private:
 
+	// Map of serial number to camera pointer
 	map<int, MotiveCamera*> cams;
 	int nActiveCams = 0;
 	
@@ -35,8 +36,11 @@ private:
 	vector<int> thisSerials;
 	vector<int> lastSerials;
 	map<int, int> serial2Index;
-	vector<int> newCams;		// newly observed
 	vector<int> lostCams;		// no longer observed
+	vector<int> newCams;		// newly observed
 	vector<int> activeCams;		// all current (active) cameras
+
+	// Utility functions
+	glm::quat getQuaternion(glm::mat3& rotationMatrix);
 };
 

@@ -26,9 +26,18 @@ void ofxMotive::setupParams() {
 	// flush the queues
 
 
-	
+}
 
+// --------------------------------------------------------------
+void ofxMotive::setCalibrationPath(string _calibrationPath) {
+	calibrationPath = _calibrationPath;
+	if (isState(MOTIVE_CONNECTED)) loadCalibration();
+}
 
+// --------------------------------------------------------------
+void ofxMotive::setProfilePath(string _profilePath) {
+	profilePath = _profilePath;
+		if (isState(MOTIVE_CONNECTED)) loadProfile();
 }
 
 // --------------------------------------------------------------
@@ -165,6 +174,7 @@ void ofxMotive::threadedFunction() {
 
 				// Try to initialize the system
 				if (initialize()) {
+					ofLogNotice("ofxMotive") << "Motive has connected";
 					setState(MOTIVE_CONNECTED);
 					loadProfile(); // load profile
 					loadCalibration();
