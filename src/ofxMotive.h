@@ -14,12 +14,18 @@
 
 #include "ofxRemoteUIServer.h"
 #include "MotiveCameraSet.h"
-
+#include "Reconstruction.h"
 
 enum MotiveState {
 	MOTIVE_DISCONNECTED = 0,
 	MOTIVE_TRY_CONNECT,
 	MOTIVE_CONNECTED,
+};
+
+// The information output from this addon
+struct MotiveOutput {
+	glm::vec3 position;
+	int ID;
 };
 
 class ofxMotive : private ofThread {
@@ -64,7 +70,7 @@ public:
 	vector<glm::vec2> get2DPoints(int camID);
 
 	/// \brief Get the reconstructed 3D points
-	vector<glm::vec3> get3DPoints();
+	vector<MotiveOutput> get3DPoints(); // this is the output
 
 	/// \brief Draw any debug info
 	//void drawDebugInfo();
@@ -114,7 +120,13 @@ private:
 
 	bool bFlushCameraQueues = false;
 
-	void update3DPoints();
+	Reconstruction reconstruction;
+
+	// save the output to a vector to be accessed by an external thread
+	//void prepareOutput();
+	// The output of this addon (should this be a queue?)
+	//vector<MotiveOutput> output;
+	
 	
 
 

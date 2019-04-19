@@ -27,6 +27,8 @@ void ofxMotive::setupParams() {
 	RUI_SHARE_PARAM_WCN("Process All Frames", bProcessAllFrames);
 	RUI_SHARE_PARAM_WCN("Flush Camera Queues", bFlushCameraQueues);
 
+	reconstruction.setupParams();
+
 	cameras.setupParams();
 }
 
@@ -252,25 +254,18 @@ bool ofxMotive::update(bool bSingleFrame) {
 // --------------------------------------------------------------
 void ofxMotive::processNewData() {
 
-	// While we can update the camera feed, update the information we're receiving
+	// While we can update the camera feed, update the information we're receiving.
+	// This returns true if there is another frame.
 	while (update(bProcessAllFrames)) {
 
 		// Update the camera information (fps, serial numbers, etc.)
 		cameras.update();
 
 		// Get the 3D information
-		
+		reconstruction.update();
 
-		// TT_FrameMarkerCount()
-		// x,y,z,residual,label
-		// which cameras are contributing?
-
-
-		// lock
-		// store the 3D info in a queue
-		// unlock
-
-
+		// run identification on the points
+	
 	}
 }
 
@@ -285,7 +280,7 @@ int ofxMotive::getNumCameras() {
 }
 
 // --------------------------------------------------------------
-vector<glm::vec2> ofxMotive::get2DPoints(int serial) {
+vector<glm::vec2> ofxMotive::get2DPoints(int serial) { // should be locking
 	vector<glm::vec2> out;
 	if (cameras.camExists(serial)) {
 		out = cameras.getCameraFromSerial(serial)->markers2DRaw;
@@ -294,8 +289,18 @@ vector<glm::vec2> ofxMotive::get2DPoints(int serial) {
 }
 
 // --------------------------------------------------------------
-
-// --------------------------------------------------------------
+vector<MotiveOutput> ofxMotive::get3DPoints() {
+	vector<MotiveOutput> output;
+	lock();
+	for (int i = 0; i < reconstruction.markers.size(); i++) {
+		MotiveOutput o;
+		o.position = reconstruction.markers[i].position;
+		o.ID = -1; // this should be the ID of the lamp
+		output.push_back(o);
+	}
+	unlock();
+	return output;
+}
 
 // --------------------------------------------------------------
 
