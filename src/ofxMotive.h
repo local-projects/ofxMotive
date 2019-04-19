@@ -29,6 +29,8 @@ public:
 
 	/// \brief Setup the RUI Params associated with this addon
 	void setupParams();
+	void setCalibrationPath(string _calibrationPath);
+	void setProfilePath(string _profilePath);
 
 	/// \brief Begin streaming and reconstructing information from the cameras
 	void start();
