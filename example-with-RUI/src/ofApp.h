@@ -23,4 +23,6 @@ class ofApp: public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		ofxMotive motive;
+
+		void newDataReceived(MotiveEventArgs& args);
 };

@@ -266,7 +266,17 @@ void ofxMotive::processNewData() {
 		reconstruction.update();
 
 		// run identification on the points
-	
+
+
+		// Update the event
+		MotiveEventArgs args;
+		for (int i = 0; i < reconstruction.markers.size(); i++) {
+			MotiveOutput o;
+			o.position = reconstruction.markers[i].position;
+			o.ID = -1; // this should be the ID of the lamp
+			args.markers.push_back(o);
+		}
+		ofNotifyEvent(newDataReceived, args);
 	}
 }
 

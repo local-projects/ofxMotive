@@ -28,6 +28,12 @@ struct MotiveOutput {
 	int ID;
 };
 
+// The event args output
+class MotiveEventArgs : public ofEventArgs {
+public:
+	vector<MotiveOutput> markers;
+};
+
 class ofxMotive : private ofThread {
 public:
 
@@ -68,6 +74,9 @@ public:
 
 	/// \brief Draw any debug info
 	//void drawDebugInfo();
+
+	// Event that occurs when new data is received
+	ofEvent< MotiveEventArgs > newDataReceived;
 
 	
 
