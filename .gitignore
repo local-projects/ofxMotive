@@ -109,3 +109,7 @@ Desktop.ini
 
 # Visual Studio things
 /.vs/
+
+
+# Libs for motive in the bin folder of any examples
+/example*/bin/
