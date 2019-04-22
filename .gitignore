@@ -105,3 +105,7 @@ Desktop.ini
 *.log
 *.sql
 *.sqlite
+
+
+# Visual Studio things
+/.vs/
