@@ -48,12 +48,6 @@ public:
 
 	bool isState(MotiveState _state);
 
-	/// \brief Try to connect after some time of being disconnected
-	void connect();
-
-	/// \brief Disconnect the system and disable all cameras.
-	void disconnect();
-
 	/// \brief Stop streaming and reconstructing
 	void stop();
 
@@ -78,6 +72,12 @@ public:
 	
 
 private:
+
+	/// \brief Try to connect after some time of being disconnected
+	void connect();
+
+	/// \brief Disconnect the system and disable all cameras.
+	void disconnect();
 
 	bool isSuccess(NPRESULT result, string fnctName = "");
 	//void logResult(NPRESULT result, string functionName = "");

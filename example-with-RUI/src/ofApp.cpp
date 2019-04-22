@@ -4,6 +4,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+	ofSetFrameRate(120);
+
 	RUI_SETUP();
 	motive.setupParams();
 	RUI_LOAD_FROM_XML();
@@ -11,7 +13,7 @@ void ofApp::setup(){
 
 	motive.setCalibrationPath(ofToDataPath("6c_20190418.cal"));
 	motive.setProfilePath(ofToDataPath("6c_20190418.motive"));
-	motive.connect();
+	motive.start();
 }
 
 //--------------------------------------------------------------

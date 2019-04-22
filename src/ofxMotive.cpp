@@ -50,7 +50,8 @@ void ofxMotive::start() {
 	// Begin the thread that will connect.
 	// If blocking is true, then any lock on this thread will wait until its acquired. Otherwise, 
 	// attempting to lock it will either return true or false.
-	startThread(bBlocking);
+	
+	if (!isThreadRunning()) startThread(bBlocking);
 	connect();
 }
 
@@ -96,7 +97,7 @@ void ofxMotive::stop() {
 	disconnect();
 
 	// Stop the main thread
-	stopThread();
+	if (isThreadRunning()) stopThread();
 }
 
 // --------------------------------------------------------------

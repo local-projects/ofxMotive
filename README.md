@@ -36,6 +36,26 @@ Since Motive only works in Windows, this addon has only been developed on Window
 
 ![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
 
+## Troubleshooting
+
+##### Poco Include Errors
+
+Sometimes, Project Generator includes the Poco addon's libraries, instead of OpenFramework's libraries. To fix these errors:
+
+In Project Properties > Configuration Properties > C/C++  > Additional Include Directories, include:
+
+- `$(OF_ROOT)\libs\poco\include`
+
+In Project Properties > Configuration Properties > Linker > Additional Include Directories, include:
+
+- `$(OF_ROOT)\libs\poco\lib\vs`
+- `$(OF_ROOT)\libs\poco\lib\vs\x64\Debug`
+- `$(OF_ROOT)\libs\poco\lib\vs\x64\Release`
+- `$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug`
+- `$(OF_ROOT)\libs\poco\lib\vs\Win32\Release`
+
+
+
 ## Reference
 
 Useful reference materials include the wikis for both API's:

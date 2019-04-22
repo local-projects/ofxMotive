@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
     <LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
     <TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Label="Globals">
@@ -32,24 +32,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
@@ -100,7 +100,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src;$(NPTRACKINGTOOLS_INC);$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include;$(OF_ROOT)\libs\poco\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
@@ -110,8 +110,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib;NPTrackingToolsx64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco;$(NPTRACKINGTOOLS_LIB);C:\Program Files\OptiTrack\Motive;C:\Program Files\OptiTrack\Motive\plugins\platforms;$(OF_ROOT)\libs\poco\lib\vs;$(OF_ROOT)\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\libs\poco\lib\vs\Win32\Release</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -122,7 +122,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src;$(NPTRACKINGTOOLS_INC);$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include;$(OF_ROOT)\libs\poco\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -133,8 +133,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib;NPTrackingToolsx64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco;$(NPTRACKINGTOOLS_LIB);C:\Program Files\OptiTrack\Motive;C:\Program Files\OptiTrack\Motive\plugins\platforms;$(OF_ROOT)\libs\poco\lib\vs;$(OF_ROOT)\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\libs\poco\lib\vs\Win32\Release</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src;$(NPTRACKINGTOOLS_INC);$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include;$(OF_ROOT)\libs\poco\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -158,8 +158,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib;NPTrackingToolsx64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco;$(NPTRACKINGTOOLS_LIB);C:\Program Files\OptiTrack\Motive;C:\Program Files\OptiTrack\Motive\plugins\platforms;$(OF_ROOT)\libs\poco\lib\vs;$(OF_ROOT)\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\libs\poco\lib\vs\Win32\Release</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -169,7 +169,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src;$(NPTRACKINGTOOLS_INC);$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include;$(OF_ROOT)\libs\poco\include</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
@@ -182,12 +182,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies);iphlpapi.lib;NPTrackingToolsx64.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\..\..\OpenFrameworks\addons\ofxPoco;$(NPTRACKINGTOOLS_LIB);C:\Program Files\OptiTrack\Motive;C:\Program Files\OptiTrack\Motive\plugins\platforms;$(OF_ROOT)\libs\poco\lib\vs;$(OF_ROOT)\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\libs\poco\lib\vs\Win32\Release</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\Marker.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\OpenFrameworks\addons\ofxOsc\src\ofxOscBundle.cpp" />
@@ -219,8 +220,10 @@
     <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCamera.cpp" />
     <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCameraSet.cpp" />
     <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotive.cpp" />
+    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\Reconstruction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\Marker.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\OpenFrameworks\addons\ofxOsc\src\ofxOsc.h" />
     <ClInclude Include="..\..\..\OpenFrameworks\addons\ofxOsc\src\ofxOscArg.h" />
@@ -261,6 +264,7 @@
     <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCamera.h" />
     <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCameraSet.h" />
     <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotive.h" />
+    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\Reconstruction.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
