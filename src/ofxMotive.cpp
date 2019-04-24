@@ -41,7 +41,7 @@ void ofxMotive::setCalibrationPath(string _calibrationPath) {
 // --------------------------------------------------------------
 void ofxMotive::setProfilePath(string _profilePath) {
 	profilePath = _profilePath;
-		if (isState(MOTIVE_CONNECTED)) loadProfile();
+	if (isState(MOTIVE_CONNECTED)) loadProfile();
 }
 
 // --------------------------------------------------------------
@@ -273,7 +273,8 @@ void ofxMotive::processNewData() {
 		for (int i = 0; i < reconstruction.markers.size(); i++) {
 			MotiveOutput o;
 			o.position = reconstruction.markers[i].position;
-			o.ID = -1; // this should be the ID of the lamp
+			o.ID = reconstruction.markers[i].ID.HighBits() % 4096;
+			//o.ID = -1; // this should be the ID of the lamp
 			args.markers.push_back(o);
 		}
 		ofNotifyEvent(newDataReceived, args);
