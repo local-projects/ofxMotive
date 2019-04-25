@@ -263,7 +263,9 @@ void ofxMotive::processNewData() {
 		cameras.update();
 
 		// Get the 3D information
+		lock(); // This must be locked since other processes use the reconstruction markers
 		reconstruction.update();
+		unlock();
 
 		// run identification on the points
 
@@ -301,16 +303,17 @@ vector<glm::vec2> ofxMotive::get2DPoints(int serial) { // should be locking
 }
 
 // --------------------------------------------------------------
-vector<MotiveOutput> ofxMotive::get3DPoints() {
+vector<MotiveOutput> ofxMotive::get3DPoints() { // this is problematic
 	vector<MotiveOutput> output;
 	lock();
-	for (int i = 0; i < reconstruction.markers.size(); i++) {
+	vector<Marker> tmp = reconstruction.markers;
+	unlock();
+	for (int i = 0; i < tmp.size(); i++) {
 		MotiveOutput o;
-		o.position = reconstruction.markers[i].position;
+		o.position = tmp[i].position;
 		o.ID = -1; // this should be the ID of the lamp
 		output.push_back(o);
 	}
-	unlock();
 	return output;
 }
 
