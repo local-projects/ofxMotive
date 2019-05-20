@@ -29,6 +29,8 @@ void ofxMotive::setupParams() {
 
 	reconstruction.setupParams();
 
+	identification.setupParams();
+
 	cameras.setupParams();
 }
 
@@ -97,7 +99,10 @@ void ofxMotive::stop() {
 	disconnect();
 
 	// Stop the main thread
-	if (isThreadRunning()) stopThread();
+	if (isThreadRunning()) {
+		waitForThread(true, 3000);
+		//stopThread(); // this crashes
+	}
 }
 
 // --------------------------------------------------------------
@@ -268,7 +273,7 @@ void ofxMotive::processNewData() {
 		unlock();
 
 		// run identification on the points
-
+		identification.update(reconstruction.markers);
 
 		// Update the event
 		MotiveEventArgs args;
@@ -316,8 +321,6 @@ vector<MotiveOutput> ofxMotive::get3DPoints() { // this is problematic
 	}
 	return output;
 }
-
-// --------------------------------------------------------------
 
 // --------------------------------------------------------------
 

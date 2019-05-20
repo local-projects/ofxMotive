@@ -15,6 +15,7 @@
 #include "ofxRemoteUIServer.h"
 #include "MotiveCameraSet.h"
 #include "Reconstruction.h"
+#include "Identification.h"
 
 enum MotiveState {
 	MOTIVE_DISCONNECTED = 0,
@@ -78,8 +79,6 @@ public:
 	// Event that occurs when new data is received
 	ofEvent< MotiveEventArgs > newDataReceived;
 
-	
-
 private:
 
 	/// \brief Try to connect after some time of being disconnected
@@ -130,6 +129,8 @@ private:
 	bool bFlushCameraQueues = false;
 
 	Reconstruction reconstruction;
+
+	Identification identification;
 
 	// save the output to a vector to be accessed by an external thread
 	//void prepareOutput();
