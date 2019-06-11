@@ -39,6 +39,12 @@ void Identification::update(vector<Marker>& markers) {
 		updatePatternTemplate();
 	}
 
+	ofLogNotice("ofxMotive") << "There are " << markers.size() << " markers";
+	for (int i = 0; i < markers.size(); i++) {
+		ofLogNotice("ofxMotive") << "\t" << i << ":\tCuID: " << markers[i].ID << "\tPos: " << markers[i].position;
+	}
+
+
 	// Determine which dots exhibit persistence
 	// Assign temporary IDs to continue tracking their pulse codes
 
