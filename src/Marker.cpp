@@ -9,6 +9,9 @@ Marker::~Marker() {
 }
 
 // ----------------------------------------------------
+string Marker::getIDString() {
+	return std::to_string(ID.HighBits()) + "-" + std::to_string(ID.LowBits());
+}
 
 // ----------------------------------------------------
 

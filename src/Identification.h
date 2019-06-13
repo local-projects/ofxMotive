@@ -65,5 +65,9 @@ private:
 	uint64_t getPatternBit(string pattern, int index);
 
 	string getDebugString(uint64_t pattern, int length);
+
+
+	// New mode as of Jun 2019:
+
 };
 

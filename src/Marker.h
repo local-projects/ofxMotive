@@ -22,5 +22,6 @@ public:
 	vector<MarkerContribution> contributions;
 	double timestamp;
 
+	string getIDString();
 };
 

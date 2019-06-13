@@ -39,10 +39,13 @@ void Identification::update(vector<Marker>& markers) {
 		updatePatternTemplate();
 	}
 
-	ofLogNotice("ofxMotive") << "There are " << markers.size() << " markers";
-	for (int i = 0; i < markers.size(); i++) {
-		ofLogNotice("ofxMotive") << "\t" << i << ":\tCuID: " << markers[i].ID << "\tPos: " << markers[i].position;
-	}
+	// print debug information
+	//stringstream ss;
+	//ss << "There are " << markers.size() << " markers:\t";
+	//for (int i = 0; i < markers.size(); i++) {
+	//	ss << markers[i].getIDString();
+	//}
+	//ofLogNotice("ofxMotive") << ss.str();
 
 
 	// Determine which dots exhibit persistence

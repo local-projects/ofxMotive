@@ -5,10 +5,11 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\libs\poco\include;$(OF_ROOT)\addons\ofxPoco\libs\poco\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(OF_ROOT)\libs\poco\lib\vs;$(OF_ROOT)\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\libs\poco\lib\vs\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OF_ROOT)\libs\poco\lib\vs;$(OF_ROOT)\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\libs\poco\lib\vs\Win32\Release;$(OF_ROOT)\addons\ofxPoco\libs\poco\lib\vs;$(OF_ROOT)\addons\ofxPoco\libs\poco\lib\vs\x64\Debug;$(OF_ROOT)\addons\ofxPoco\libs\poco\lib\vs\x64\Release;$(OF_ROOT)\addons\ofxPoco\libs\poco\lib\vs\Win32\Debug;$(OF_ROOT)\addons\ofxPoco\libs\poco\lib\vs\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>NPTrackingToolsx64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
