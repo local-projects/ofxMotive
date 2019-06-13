@@ -1,5 +1,9 @@
 #include "Identification.h"
 
+float dbeta(int alpha, int numA, int beta, int numB) {
+	return float(alpha + numA) / float(alpha + numA + beta + numB);
+}
+
 // ----------------------------------------------------
 Identification::Identification() {
 
@@ -46,6 +50,74 @@ void Identification::update(vector<Marker>& markers) {
 	//	ss << markers[i].getIDString();
 	//}
 	//ofLogNotice("ofxMotive") << ss.str();
+
+	// Create a timestamp for this ID update
+	float updateIDTimestamp = ofGetElapsedTimef();
+
+	// Check if sources already exist
+	for (int i = 0; i < markers.size(); i++) {
+
+		Core::cUID ID = markers[i].ID;
+		// Has this ID already been observed?
+		LightSource* ls = NULL;
+		if (sources.find(ID) == sources.end()) {
+			// Does not exist.
+
+			// Are any of the last sources close in proximity enough to suggest that it is the same?
+			// If so, then fuse it with that one.
+
+			// If not, then create a new source and associate it with this ID
+			ls = new LightSource(ID);
+			sources[ID] = ls;
+		}
+		else {
+			// Retrieve the previous source
+			ls = sources[ID];
+		}
+
+		// Update the pulse code with new data (this data is "ON");
+		ls->addSample(true, updateIDTimestamp);
+	}
+	// For all other sources, update that they have not received data
+	for (auto it = sources.begin(); it != sources.end(); it++) {
+		// If this source's timstamp differs, then it hasn't been updated this cycle
+		if (it->second->getLastSampleUpdateTimestamp() != updateIDTimestamp) {
+			// Add a "not seen" observation
+			it->second->addSample(false, updateIDTimestamp);
+		}
+	}
+
+	// Cull out sources that have have not been seen in some time
+	for (auto it = sources.begin(); it != sources.end(); ) {
+		if (!it->second->wasRecentlySeen()) {
+			delete it->second;
+			it = sources.erase(it); // or sources.erase(it++); // this returns, then increments it
+		}
+		else {
+			++it; // this increments, then returns
+		}
+	}
+	
+	// Process any recent samples for new bits
+	for (auto it = sources.begin(); it != sources.end(); it++) {
+
+		// Update the bits
+		it->second->updateBits();
+
+		// Update the ID
+		it->second->updateID();
+	}
+
+	// Print any successfully ID'd lamps
+	for (auto it = sources.begin(); it != sources.end(); it++) {
+
+		PredictedID id = it->second->getPredictedID();
+		if (id.isValidPrediction()) {
+			ofLogNotice("Identification") << "Predict ID " << id.getIDPrediction() << " with likelihood" << id.getIDLikelihood();
+		}
+	}
+
+
 
 
 	// Determine which dots exhibit persistence
