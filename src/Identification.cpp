@@ -1,9 +1,5 @@
 #include "Identification.h"
 
-float dbeta(int alpha, int numA, int beta, int numB) {
-	return float(alpha + numA) / float(alpha + numA + beta + numB);
-}
-
 // ----------------------------------------------------
 Identification::Identification() {
 
@@ -77,6 +73,7 @@ void Identification::update(vector<Marker>& markers) {
 
 		// Update the pulse code with new data (this data is "ON");
 		ls->addSample(true, updateIDTimestamp);
+		ls->position = markers[i].position;
 	}
 	// For all other sources, update that they have not received data
 	for (auto it = sources.begin(); it != sources.end(); it++) {
@@ -108,16 +105,17 @@ void Identification::update(vector<Marker>& markers) {
 		it->second->updateID();
 	}
 
+	// TODO: Associate any successful IDs with their markers
+
+
 	// Print any successfully ID'd lamps
-	for (auto it = sources.begin(); it != sources.end(); it++) {
-
-		PredictedID id = it->second->getPredictedID();
-		if (id.isValidPrediction()) {
-			ofLogNotice("Identification") << "Predict ID " << id.getIDPrediction() << " with likelihood" << id.getIDLikelihood();
-		}
-	}
-
-
+	//for (auto it = sources.begin(); it != sources.end(); it++) {
+	//	
+	//	PredictedID id = it->second->getPredictedID();
+	//	if (id.isValidPrediction()) {
+	//		ofLogNotice("Identification") << "Predict ID " << id.getIDPrediction() << " with likelihood " << id.getIDLikelihood();
+	//	}
+	//}
 
 
 	// Determine which dots exhibit persistence
@@ -139,6 +137,23 @@ void Identification::update(vector<Marker>& markers) {
 
 
 
+}
+
+// ----------------------------------------------------
+vector<Lamp> Identification::getIdentifiedLamps() {
+
+	vector<Lamp> out;
+	for (auto it = sources.begin(); it != sources.end(); it++) {
+		PredictedID IDP = it->second->getPredictedID();
+		if (IDP.isValidPrediction()) {
+			Lamp l;
+			l.ID = IDP.getIDPrediction();
+			l.IDLikelihood = IDP.getIDLikelihood();
+			l.position = it->second->position;
+			out.push_back(l);
+		}
+	}
+	return out;
 }
 
 // ----------------------------------------------------

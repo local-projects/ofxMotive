@@ -21,6 +21,7 @@ public:
 	float residual;
 	vector<MarkerContribution> contributions;
 	double timestamp;
+	
 
 	string getIDString();
 };

@@ -277,13 +277,25 @@ void ofxMotive::processNewData() {
 
 		// Update the event
 		MotiveEventArgs args;
-		for (int i = 0; i < reconstruction.markers.size(); i++) {
+
+		// Update with ID-specific data
+		vector<Lamp> lamps = identification.getIdentifiedLamps();
+		for (int i = 0; i < lamps.size(); i++) {
 			MotiveOutput o;
-			o.position = reconstruction.markers[i].position;
-			o.ID = reconstruction.markers[i].ID.HighBits() % 4096;
-			//o.ID = -1; // this should be the ID of the lamp
+			o.position = lamps[i].position;
+			o.ID = lamps[i].ID;
 			args.markers.push_back(o);
 		}
+
+		// Update with ID-agnostic data
+		//for (int i = 0; i < reconstruction.markers.size(); i++) {
+		//	MotiveOutput o;
+		//	o.position = reconstruction.markers[i].position;
+		//	o.ID = reconstruction.markers[i].ID.HighBits() % 4096;
+		//	//o.ID = -1; // this should be the ID of the lamp
+		//	args.markers.push_back(o);
+		//}
+
 		ofNotifyEvent(newDataReceived, args);
 	}
 }
@@ -311,12 +323,18 @@ vector<glm::vec2> ofxMotive::get2DPoints(int serial) { // should be locking
 vector<MotiveOutput> ofxMotive::get3DPoints() { // this is problematic
 	vector<MotiveOutput> output;
 	lock();
-	vector<Marker> tmp = reconstruction.markers;
+
+	// ID-agnostic
+	//vector<Marker> tmp = reconstruction.markers;
+
+	// ID-specific
+	vector<Lamp> tmp = identification.getIdentifiedLamps();
+
 	unlock();
 	for (int i = 0; i < tmp.size(); i++) {
 		MotiveOutput o;
 		o.position = tmp[i].position;
-		o.ID = -1; // this should be the ID of the lamp
+		o.ID = tmp[i].ID; // -1; // this should be the ID of the lamp
 		output.push_back(o);
 	}
 	return output;
