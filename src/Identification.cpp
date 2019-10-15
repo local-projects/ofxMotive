@@ -195,9 +195,9 @@ void Identification::updatePatternTemplate() {
 		loc--;
 	}
 
-	ofLogNotice("Identification") << getDebugString(getPattern(888), nTotalBits) << " " << getDebugString(getPattern(1325), nTotalBits);
+	//ofLogNotice("Identification") << getDebugString(getPattern(888), nTotalBits) << " " << getDebugString(getPattern(1325), nTotalBits);
 	bSmartInterleave = true;
-	ofLogNotice("Identification") << getDebugString(getPattern(888), nTotalBits) << " " << getDebugString(getPattern(1325), nTotalBits);
+	//ofLogNotice("Identification") << getDebugString(getPattern(888), nTotalBits) << " " << getDebugString(getPattern(1325), nTotalBits);
 
 
 }
