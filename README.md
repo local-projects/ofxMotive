@@ -10,7 +10,7 @@ Since Motive only works in Windows, this addon has only been developed on Window
 
 ### Dependencies
 
-1. [Motive API](https://optitrack.com/products/motive/tracker/)
+1. [Motive API](https://optitrack.com/downloads/motive.html)
 2. [Camera SDK](https://optitrack.com/products/camera-sdk/)
 
 #### Installation
