@@ -14,8 +14,8 @@ void ofApp::setup(){
 	ofAddListener(motive.newDataReceived, this, &ofApp::newDataReceived);
 
 	// Setup and start motive
-	motive.setCalibrationPath(ofToDataPath("6c_20190418.cal"));
-	motive.setProfilePath(ofToDataPath("6c_20190418.motive"));
+	motive.setCalibrationPath(ofToDataPath("calibration.cal"));
+	motive.setProfilePath(ofToDataPath("profile.motive"));
 	motive.start();
 }
 
@@ -47,6 +47,7 @@ void ofApp::newDataReceived(MotiveEventArgs& args) {
 	ss << "Motive Output\n";
 	for (int i = 0; i < args.markers.size(); i++) {
 		ss << "\t" << args.markers[i].position << "\n";
+		ss << "\t" << args.markers[i].cuid.HighBits() << "\t" << args.markers[i].cuid.LowBits() << "\n";
 	}
 	if (args.markers.size() > 0) cout << ss.str() << endl;
 

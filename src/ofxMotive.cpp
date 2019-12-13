@@ -29,8 +29,6 @@ void ofxMotive::setupParams() {
 
 	reconstruction.setupParams();
 
-	identification.setupParams();
-
 	cameras.setupParams();
 }
 
@@ -272,29 +270,14 @@ void ofxMotive::processNewData() {
 		reconstruction.update();
 		unlock();
 
-		// run identification on the points
-		identification.update(reconstruction.markers);
-
 		// Update the event
 		MotiveEventArgs args;
-
-		// Update with ID-specific data
-		vector<Lamp> lamps = identification.getIdentifiedLamps();
-		for (int i = 0; i < lamps.size(); i++) {
+		for (int i = 0; i < reconstruction.markers.size(); i++) {
 			MotiveOutput o;
-			o.position = lamps[i].position;
-			o.ID = lamps[i].ID;
+			o.position = reconstruction.markers[i].position;
+			o.cuid = reconstruction.markers[i].ID;
 			args.markers.push_back(o);
 		}
-
-		// Update with ID-agnostic data
-		//for (int i = 0; i < reconstruction.markers.size(); i++) {
-		//	MotiveOutput o;
-		//	o.position = reconstruction.markers[i].position;
-		//	o.ID = reconstruction.markers[i].ID.HighBits() % 4096;
-		//	//o.ID = -1; // this should be the ID of the lamp
-		//	args.markers.push_back(o);
-		//}
 
 		ofNotifyEvent(newDataReceived, args);
 	}
@@ -324,28 +307,14 @@ vector<MotiveOutput> ofxMotive::get3DPoints() { // this is problematic
 	vector<MotiveOutput> output;
 	lock();
 
-	// ID-agnostic
-	//vector<Marker> tmp = reconstruction.markers;
-
-	// ID-specific
-	vector<Lamp> tmp = identification.getIdentifiedLamps();
+	vector<Marker> tmp = reconstruction.markers;
 
 	unlock();
 	for (int i = 0; i < tmp.size(); i++) {
 		MotiveOutput o;
 		o.position = tmp[i].position;
-		o.ID = tmp[i].ID; // -1; // this should be the ID of the lamp
+		o.cuid = tmp[i].ID;
 		output.push_back(o);
 	}
 	return output;
 }
-
-// --------------------------------------------------------------
-
-// --------------------------------------------------------------
-
-// --------------------------------------------------------------
-
-// --------------------------------------------------------------
-
-// --------------------------------------------------------------

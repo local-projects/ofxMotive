@@ -15,7 +15,6 @@
 #include "ofxRemoteUIServer.h"
 #include "MotiveCameraSet.h"
 #include "Reconstruction.h"
-#include "Identification.h"
 
 enum MotiveState {
 	MOTIVE_DISCONNECTED = 0,
@@ -26,7 +25,7 @@ enum MotiveState {
 // The information output from this addon
 struct MotiveOutput {
 	glm::vec3 position;
-	int ID;
+	Core::cUID cuid;
 };
 
 // The event args output
@@ -129,15 +128,5 @@ private:
 	bool bFlushCameraQueues = false;
 
 	Reconstruction reconstruction;
-
-	Identification identification;
-
-	// save the output to a vector to be accessed by an external thread
-	//void prepareOutput();
-	// The output of this addon (should this be a queue?)
-	//vector<MotiveOutput> output;
-	
-	
-
 
 };
