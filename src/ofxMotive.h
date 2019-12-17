@@ -106,13 +106,13 @@ private:
 
 	bool bForceDisconnect = false;
 
-	string profilePath = ""; // should be a .motive file (actually xml)
+	string profilePath = ofToDataPath("profile.motive");; // should be a .motive file (actually xml)
 	bool bForceLoadProfile = false;
 	bool loadProfile();
 	bool bSaveProfile = false;
 	bool saveProfile();
 
-	string calibrationPath = ""; // should be a .cal file
+	string calibrationPath = ofToDataPath("calibration.cal");; // should be a .cal file
 	bool bForceLoadCalibration = false;
 	bool loadCalibration();
 
