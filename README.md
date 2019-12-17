@@ -42,6 +42,8 @@ Since Motive only works in Windows, this addon has only been developed on Window
 
 ![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
 
+5. Add your Motive calibration (`.cal`) and profile (`.motive`) files to your project's `bin/data` folder. By default, ofxMotive looks for `calibration.cal` and `profile.motive`. If your files are named differently, you can either rename to match the default, or change the paths with ofxRemoteUI.
+
 ## Troubleshooting
 
 ##### Poco Include Errors
