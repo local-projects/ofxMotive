@@ -4,6 +4,12 @@
 #include "ofxRemoteUIServer.h"
 #include "NPTrackingTools.h"
 
+// Given a cUID, if a marker active?
+bool isMarkerActive(Core::cUID ID);
+
+// What is the marker's ID? If it isn't active, -1 is returned.
+int getActiveMarkerID(Core::cUID ID);
+
 struct MarkerContribution {
 	int cameraIndex;
 	int cameraSerial;

@@ -1,6 +1,16 @@
 #include "Marker.h"
 
 // ----------------------------------------------------
+bool isMarkerActive(Core::cUID ID) {
+	return Core::cMarker::kActiveMarkerIDTag == ID.LowBits();
+}
+
+// ----------------------------------------------------
+int getActiveMarkerID(Core::cUID ID) {
+	return isMarkerActive(ID) ? ID.HighBits() : -1;
+}
+
+// ----------------------------------------------------
 Marker::Marker() {
 }
 
