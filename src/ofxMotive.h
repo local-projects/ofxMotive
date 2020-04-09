@@ -23,15 +23,23 @@ enum MotiveState {
 };
 
 // The information output from this addon
-struct MotiveOutput {
+struct MotiveOutputMarker {
 	glm::vec3 position;
 	Core::cUID cuid;
+};
+
+struct MotiveOutputCamera {
+	glm::vec3 position;
+	glm::quat orientation;
+	int ID = -1;		// displayed on camera LED screen
+	int serial = -1;	// hardware serial number (unique to camera)
 };
 
 // The event args output
 class MotiveEventArgs : public ofEventArgs {
 public:
-	vector<MotiveOutput> markers;
+	vector<MotiveOutputMarker> markers;
+	vector<MotiveOutputCamera> cameras;
 };
 
 class ofxMotive : private ofThread {
@@ -70,7 +78,7 @@ public:
 	vector<glm::vec2> get2DPoints(int camID);
 
 	/// \brief Get the reconstructed 3D points
-	vector<MotiveOutput> get3DPoints(); // this is the output
+	vector<MotiveOutputMarker> get3DPoints(); // this is the output
 
 	/// \brief Draw any debug info
 	//void drawDebugInfo();
@@ -94,8 +102,6 @@ private:
 
 	void threadedFunction();
 	bool bBlocking = true;
-
-	//CameraList cams;
 
 	void startTryConnect();
 	long lastTryConnectTime = 0;

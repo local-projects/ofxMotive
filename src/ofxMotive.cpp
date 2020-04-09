@@ -15,17 +15,17 @@ ofxMotive::~ofxMotive() {
 void ofxMotive::setupParams() {
 
 	RUI_NEW_GROUP("ofxMotive");
-	RUI_SHARE_PARAM_WCN("Force Try Connect", bForceTryConnect);
-	RUI_SHARE_PARAM_WCN("Try Connect Timestep", tryConnectTimestep, 0, 10000);
-	RUI_SHARE_PARAM_WCN("Max Try Connect Attempts", maxTryConnectAttempts, 1, 10);
-	RUI_SHARE_PARAM_WCN("Profile Path", profilePath);
-	RUI_SHARE_PARAM_WCN("Reload Profile", bForceLoadProfile);
-	RUI_SHARE_PARAM_WCN("Save Profile", bSaveProfile);
-	RUI_SHARE_PARAM_WCN("Calibration Path", calibrationPath);
-	RUI_SHARE_PARAM_WCN("Reload Calibration", bForceLoadCalibration);
-	RUI_SHARE_PARAM_WCN("Force Disconnect", bForceDisconnect);
-	RUI_SHARE_PARAM_WCN("Process All Frames", bProcessAllFrames);
-	RUI_SHARE_PARAM_WCN("Flush Camera Queues", bFlushCameraQueues);
+	RUI_SHARE_PARAM_WCN("Motive- Force Try Connect", bForceTryConnect);
+	RUI_SHARE_PARAM_WCN("Motive- Try Connect Timestep", tryConnectTimestep, 0, 10000);
+	RUI_SHARE_PARAM_WCN("Motive- Max Try Connect Attempts", maxTryConnectAttempts, 1, 10);
+	RUI_SHARE_PARAM_WCN("Motive- Profile Path", profilePath);
+	RUI_SHARE_PARAM_WCN("Motive- Reload Profile", bForceLoadProfile);
+	RUI_SHARE_PARAM_WCN("Motive- Save Profile", bSaveProfile);
+	RUI_SHARE_PARAM_WCN("Motive- Calibration Path", calibrationPath);
+	RUI_SHARE_PARAM_WCN("Motive- Reload Calibration", bForceLoadCalibration);
+	RUI_SHARE_PARAM_WCN("Motive- Force Disconnect", bForceDisconnect);
+	RUI_SHARE_PARAM_WCN("Motive- Process All Frames", bProcessAllFrames);
+	RUI_SHARE_PARAM_WCN("Motive- Flush Camera Queues", bFlushCameraQueues);
 
 	reconstruction.setupParams();
 
@@ -272,11 +272,22 @@ void ofxMotive::processNewData() {
 
 		// Update the event
 		MotiveEventArgs args;
+		// Add all markers
 		for (int i = 0; i < reconstruction.markers.size(); i++) {
-			MotiveOutput o;
+			MotiveOutputMarker o;
 			o.position = reconstruction.markers[i].position;
 			o.cuid = reconstruction.markers[i].ID;
 			args.markers.push_back(o);
+		}
+		// Add all active cameras
+		auto activeCams = cameras.getActiveCameras();
+		for (int i = 0; i < activeCams.size(); i++) {
+			MotiveOutputCamera o;
+			o.ID = activeCams[i]->ID;
+			o.serial = activeCams[i]->serial;
+			o.position = activeCams[i]->position;
+			o.orientation = activeCams[i]->orientation;
+			args.cameras.push_back(o);
 		}
 
 		ofNotifyEvent(newDataReceived, args);
@@ -303,15 +314,15 @@ vector<glm::vec2> ofxMotive::get2DPoints(int serial) { // should be locking
 }
 
 // --------------------------------------------------------------
-vector<MotiveOutput> ofxMotive::get3DPoints() { // this is problematic
-	vector<MotiveOutput> output;
+vector<MotiveOutputMarker> ofxMotive::get3DPoints() { // this is problematic
+	vector<MotiveOutputMarker> output;
 	lock();
 
 	vector<Marker> tmp = reconstruction.markers;
 
 	unlock();
 	for (int i = 0; i < tmp.size(); i++) {
-		MotiveOutput o;
+		MotiveOutputMarker o;
 		o.position = tmp[i].position;
 		o.cuid = tmp[i].ID;
 		output.push_back(o);
