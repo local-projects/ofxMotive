@@ -55,14 +55,17 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="../../../OpenFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+    <Import Project="..\ofxMotive.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="../../../OpenFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+    <Import Project="..\ofxMotive.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="../../../OpenFrameworks/libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+    <Import Project="..\ofxMotive.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -104,7 +107,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -127,7 +130,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -149,7 +152,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -173,7 +176,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
