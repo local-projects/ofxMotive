@@ -6,28 +6,24 @@ This addon allows for easy access to Optitrack Motive's API for accessing 2D and
 
 ### Systems
 
-Since Motive only works in Windows, this addon has only been developed on Windows 10 with Visual Studios 2017.
+Since Motive only works in Windows, this addon has only been developed on Windows 10 with Visual Studios 2019.
 
 ### Dependencies
 
-1. [Motive API](https://optitrack.com/downloads/motive.html) (v2.1)
-2. [Camera SDK](https://optitrack.com/products/camera-sdk/)
+1. [Motive API](https://optitrack.com/downloads/motive.html) (v2.2.0)
 
 #### Installation
 
-1. Ensure Motive has been downloaded, installed and has a valid license. By default, its program files should be installed to `C:\Program Files\OptiTrack\Motive`
-2. Download the Camera SDK to a convenient location.
+1. Ensure that a valid license for Motive exists in the folder `C:\ProgramData\OptiTrack\License`. 
+
+   *Note: It is recommended that users install Motive to their computer in order to validate their license and generate accurate calibration files. However, Motive does not need to be installed for this addon to work, since all Motive v2.2.0 headers, libs and dlls have already been included in the folder `motive`.* By default, Motive installs to the directory `C:\Program Files\OptiTrack\Motive`.
 
 ## How to use this addon with your project
 
-1. Add this addon to your addons file
-2. Generate your OF project with the Project Generator
-3. Include the appropriate headers and libraries in your addon.
-   1. Open the *Property Manager* under *View > Other Windows > Property Manager*
-   2. For every configuration (e.g. 'Debug | x64') under your project (e.g. 'example-with -RUI'), right click on the configuration and choose *Add Existing Property Sheet*
-   3. Navigate to the ofxMotive addon directory and select *ofxMotive.props* 
-
-5. Add your Motive calibration (`.cal`) and profile (`.motive`) files to your project's `bin/data` folder. By default, ofxMotive looks for `calibration.cal` and `profile.motive`. If your files are named differently, you can either rename to match the default, or change the paths with ofxRemoteUI.
+1. Add this addon to your addons file.
+2. Generate your OF project with the Project Generator.
+3. Include the `Motive.props` property sheet. You can do this by opening the project in Visual Studios, navigating to the *Property Manager* window (under *View > Other Windows > Property Manager*), right clicking on your project and selecting *Add Existing Property Sheet*. Select the file *ofxMotive.props* included in this repo.
+4. Add your Motive calibration (`.cal`) and profile (`.motive`) files to your project's `bin/data` folder. By default, ofxMotive looks for `calibration.cal` and `profile.motive`. If your files are named differently, you can either rename to match the default, or change the paths with ofxRemoteUI.
 
 ## Troubleshooting
 
@@ -53,7 +49,7 @@ Sometimes, Project Generator includes the Poco addon's libraries, instead of Ope
 
 Motive requires that a number of dll's and lib's are copied into the bin folder, alongside your executable. A Post-Build Step in the ofxMotive.props file should complete this task. However, if after building, you notice that this lib and the others below are not in your bin folder, then complete these steps manually:
 
-1. Copy all files from the folder within this addon titled *Motive2.1 Required Libraries* into your project's executable directory (*bin*). The files that will be copied include those in the below image. It is crucial for these files to be accessible at the same file structure level as the executable itself. For more information, [see this page](https://v21.wiki.optitrack.com/index.php?title=Motive_API:_Quick_Start_Guide#Library_Files).
+1. Copy all files from the folder *motive > bin* into your project's executable directory (*bin*). The files that will be copied include those in the below image. It is crucial for these files to be accessible at the same file structure level as the executable itself. For more information, [see this page](https://v21.wiki.optitrack.com/index.php?title=Motive_API:_Quick_Start_Guide#Library_Files).
 
 ![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
 
