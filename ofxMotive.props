@@ -5,15 +5,15 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(NPTRACKINGTOOLS_INC);$(NP_FIRST_PARTY)\SharedLibraries\RigidBodySolver\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OF_ROOT)\..\ExternalAddons\ofxMotive\motive\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(NPTRACKINGTOOLS_LIB);C:\Program Files\OptiTrack\Motive;C:\Program Files\OptiTrack\Motive\plugins\platforms;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OF_ROOT)\..\ExternalAddons\ofxMotive\motive\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>NPTrackingToolsx64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>for /d %%f in ("$(OF_ROOT)\libs\*") do (if exist "%%f\lib\vs\$(Platform_Actual)\*.dll" ( robocopy "%%f\lib\vs\$(Platform_Actual)" "$(ProjectDir)bin" "*.dll" /njs /njh /np /fp /bytes ))
-for %%f in ("$(OF_ROOT)\..\ExternalAddons\ofxMotive\lib") do ( robocopy "%%f" "$(ProjectDir)bin" /s /njs /njh /np /fp /bytes )
+for %%f in ("$(OF_ROOT)\..\ExternalAddons\ofxMotive\motive\bin") do ( robocopy "%%f" "$(ProjectDir)bin" /s /njs /njh /np /fp /bytes )
 if errorlevel 1 exit 0 else exit %errorlevel%
 </Command>
     </PostBuildEvent>
