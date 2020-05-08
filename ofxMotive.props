@@ -1,22 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup>
+    <OFXMOTIVE_ROOT Condition="'$(OFXMOTIVE_ROOT)'==''">$(OF_ROOT)\..\ExternalAddons\ofxMotive</OFXMOTIVE_ROOT>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(OF_ROOT)\..\ExternalAddons\ofxMotive\motive\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OFXMOTIVE_ROOT)\motive\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(OF_ROOT)\..\ExternalAddons\ofxMotive\motive\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OFXMOTIVE_ROOT)\motive\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>NPTrackingToolsx64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>for /d %%f in ("$(OF_ROOT)\libs\*") do (if exist "%%f\lib\vs\$(Platform_Actual)\*.dll" ( robocopy "%%f\lib\vs\$(Platform_Actual)" "$(ProjectDir)bin" "*.dll" /njs /njh /np /fp /bytes ))
-for %%f in ("$(OF_ROOT)\..\ExternalAddons\ofxMotive\motive\bin") do ( robocopy "%%f" "$(ProjectDir)bin" /s /njs /njh /np /fp /bytes )
-if errorlevel 1 exit 0 else exit %errorlevel%
-</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\Marker.cpp" />
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\MotiveCamera.cpp" />
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\MotiveCameraSet.cpp" />
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotive.cpp" />
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\Reconstruction.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\Marker.h" />
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\MotiveCamera.h" />
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\MotiveCameraSet.h" />
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotive.h" />
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\Reconstruction.h" />
+  </ItemGroup>
+  <ItemGroup>
+  	<ContentWithTargetPath Include="$(OFXMOTIVE_ROOT)\motive\bin\platforms\qwindows.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  		<TargetPath>platforms\qwindows.dll</TargetPath>
+  	</ContentWithTargetPath>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\avcodec-57.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\avfilter-6.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\avformat-57.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+   	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\avresample-3.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\avutil-55.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\libiomp5md.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\NPTrackingToolsx64.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\opencv_world330.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\python36.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5Core.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5Gui.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5Multimedia.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5Network.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5OpenGL.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5Svg.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\Qt5Widgets.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\qwindows.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\shiboken2.cp36-win_amd64.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\swscale-4.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\tbb.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  	<Content Include="$(OFXMOTIVE_ROOT)\motive\bin\ToolKitPro1521vc140x64U.dll">
+  		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  		<Visible>false</Visible>
+  	</Content>
+  </ItemGroup>
 </Project>

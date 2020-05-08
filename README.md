@@ -29,21 +29,16 @@ Since Motive only works in Windows, this addon has only been developed on Window
 
 ##### Poco Include Errors
 
-Sometimes, Project Generator includes the Poco addon's libraries, instead of OpenFramework's libraries. There are two ways to fix these errors:
+Sometimes, Project Generator includes the Poco addon's libraries, instead of OpenFramework's libraries. Here's how to fix it:
 
-1. Property Sheets: The Easy Way
-   1. Open the *Property Manager* under *View > Other Windows > Property Manager*
-   2. For every configuration (e.g. 'Debug | x64') under your project (e.g. 'example-with -RUI'), right click on the configuration and choose *Add Existing Property Sheet*
-   3. Navigate to the ofxMotive addon directory and select *ofxPoco.props* 
-2. Manually Editing Properties: The Hard Way
-   1. In Project Properties > Configuration Properties > C/C++  > Additional Include Directories, include:
-      - `$(OF_ROOT)\libs\poco\include`
-   2. In Project Properties > Configuration Properties > Linker > Additional Include Directories, include:
-      1. `$(OF_ROOT)\libs\poco\lib\vs`
-      2. `$(OF_ROOT)\libs\poco\lib\vs\x64\Debug`
-      3. `$(OF_ROOT)\libs\poco\lib\vs\x64\Release`
-      4. `$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug`
-      5. `$(OF_ROOT)\libs\poco\lib\vs\Win32\Release`
+1. In Project Properties > Configuration Properties > C/C++  > Additional Include Directories, include:
+   - `$(OF_ROOT)\libs\poco\include`
+2. In Project Properties > Configuration Properties > Linker > Additional Include Directories, include:
+   1. `$(OF_ROOT)\libs\poco\lib\vs`
+   2. `$(OF_ROOT)\libs\poco\lib\vs\x64\Debug`
+   3. `$(OF_ROOT)\libs\poco\lib\vs\x64\Release`
+   4. `$(OF_ROOT)\libs\poco\lib\vs\Win32\Debug`
+   5. `$(OF_ROOT)\libs\poco\lib\vs\Win32\Release`
 
 ##### Cannot Find NPTrackingToolsx64.lib
 
