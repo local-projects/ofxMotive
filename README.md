@@ -53,6 +53,12 @@ Motive requires that a number of dll's and lib's are copied into the bin folder,
 
 ![](https://v21.wiki.optitrack.com/images/6/6a/MotiveAPI_RequiredLIB.png)
 
+##### Even with an eSync, cameras are not all in sync
+
+Make sure all of your cables are connected. The ethernet cable from your computer to your network switch should be connected on the switch's 10G port (as opposed to a slower 1G port).
+
+The network switch should have the StormControl feature disabled. If needed, check your switch settings to make sure it is disabled. If not, it will delay network traffic to prevent "storms" of messages. 
+
 ## Reference
 
 Useful reference materials include the wikis for both API's:
