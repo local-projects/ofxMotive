@@ -14,20 +14,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\Marker.cpp" />
-    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\MotiveCamera.cpp" />
-    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\MotiveCameraSet.cpp" />
-    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotive.cpp" />
-    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\Reconstruction.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\Marker.h" />
-    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\MotiveCamera.h" />
-    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\MotiveCameraSet.h" />
-    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotive.h" />
-    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\Reconstruction.h" />
-  </ItemGroup>
-  <ItemGroup>
   	<ContentWithTargetPath Include="$(OFXMOTIVE_ROOT)\motive\bin\platforms\qwindows.dll">
   		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   		<Visible>false</Visible>
