@@ -107,7 +107,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -130,7 +130,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -152,7 +152,7 @@
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -176,7 +176,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\OpenFrameworks\addons\ofxOsc\libs;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\OpenFrameworks\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\OpenFrameworks\addons\ofxOsc\src;..\..\..\OpenFrameworks\addons\ofxPoco\libs\poco\include;..\..\..\OpenFrameworks\addons\ofxPoco\src;..\..\..\OpenFrameworks\addons\ofxXmlSettings\libs;..\..\..\OpenFrameworks\addons\ofxXmlSettings\src;..\..\..\ExternalAddons\ofxRemoteUI\src;..\..\..\ExternalAddons\ofxMotive\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
       <AdditionalOptions>-DPOCO_STATIC</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -220,11 +220,12 @@
     <ClCompile Include="..\..\..\ExternalAddons\ofxRemoteUI\src\OscQueryServerMgr.cpp" />
     <ClCompile Include="..\..\..\ExternalAddons\ofxRemoteUI\src\RUIWebBinary.cpp" />
     <ClCompile Include="..\..\..\ExternalAddons\ofxRemoteUI\src\uriencode.cpp" />
-    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\Marker.cpp" />
-    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCamera.cpp" />
-    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCameraSet.cpp" />
     <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotive.cpp" />
-    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\Reconstruction.cpp" />
+    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCamera.cpp" />
+    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCameraSet.cpp" />
+    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveMarker.cpp" />
+    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveReconstruction.cpp" />
+    <ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveStatus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h" />
@@ -264,11 +265,12 @@
     <ClInclude Include="..\..\..\ExternalAddons\ofxRemoteUI\src\OscQueryServerMgr.h" />
     <ClInclude Include="..\..\..\ExternalAddons\ofxRemoteUI\src\RemoteParam.h" />
     <ClInclude Include="..\..\..\ExternalAddons\ofxRemoteUI\src\uriencode.h" />
-    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\Marker.h" />
-    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCamera.h" />
-    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCameraSet.h" />
     <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotive.h" />
-    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\Reconstruction.h" />
+    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCamera.h" />
+    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCameraSet.h" />
+    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveMarker.h" />
+    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveReconstruction.h" />
+    <ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

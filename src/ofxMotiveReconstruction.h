@@ -3,19 +3,19 @@
 #include "ofMain.h"
 #include "ofxRemoteUIServer.h"
 #include "NPTrackingTools.h"
-#include "Marker.h"
+#include "ofxMotiveMarker.h"
 
-class Reconstruction {
+class MotiveReconstruction {
 public:
 
-	Reconstruction();
-	~Reconstruction();
+	MotiveReconstruction();
+	~MotiveReconstruction();
 
 	void setupParams();
 
 	void update();
 
-	vector<Marker> markers;
+	vector<MotiveMarker> markers;
 
 private:
 

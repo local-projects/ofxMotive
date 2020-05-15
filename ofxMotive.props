@@ -1,18 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ImportGroup Label="PropertySheets" />
   <PropertyGroup>
-    <OFXMOTIVE_ROOT Condition="'$(OFXMOTIVE_ROOT)'==''">$(OF_ROOT)\..\ExternalAddons\ofxMotive</OFXMOTIVE_ROOT>
+    <OFXMOTIVE_ROOT Condition="'$(OFXMOTIVE_ROOT)'==''">$(MSBuildThisFileDirectory)</OFXMOTIVE_ROOT>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(OFXMOTIVE_ROOT)\motive\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OFXMOTIVE_ROOT)\motive\inc;$(OFXMOTIVE_ROOT)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(OFXMOTIVE_ROOT)\motive\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>NPTrackingToolsx64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <Filter Include="local_addons" />
+    <Filter Include="local_addons\ofxMotive" />
+    <Filter Include="local_addons\ofxMotive\src" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveMarker.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCamera.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCameraSet.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotive.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveReconstruction.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveStatus.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveMarker.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCamera.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCameraSet.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotive.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveReconstruction.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveStatus.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+  </ItemGroup>
   <ItemGroup>
   	<ContentWithTargetPath Include="$(OFXMOTIVE_ROOT)\motive\bin\platforms\qwindows.dll">
   		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

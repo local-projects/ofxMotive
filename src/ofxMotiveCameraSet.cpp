@@ -1,4 +1,4 @@
-#include "MotiveCameraSet.h"
+#include "ofxMotiveCameraSet.h"
 
 // --------------------------------------------------------
 MotiveCameraSet::MotiveCameraSet() {
@@ -111,18 +111,6 @@ void MotiveCameraSet::update() {
 		cam->ID = TT_CameraID(cam->index);
 		// camera state
 		TT_CameraState(cam->index, cam->camState);
-		// location
-		cam->position.x = TT_CameraXLocation(cam->index);
-		cam->position.y = TT_CameraYLocation(cam->index);
-		cam->position.z = TT_CameraZLocation(cam->index);
-		// orientation
-		glm::mat3 mat;
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				mat[i][j] = TT_CameraOrientationMatrix(cam->index, i * 3 + j);
-			}
-		}
-		cam->orientation = getQuaternion(mat);
 		// pixel resolution
 		int width, height;
 		if (TT_CameraPixelResolution(cam->index, width, height)) {
@@ -157,6 +145,21 @@ void MotiveCameraSet::update() {
 		// Update their active index
 		cam->index = serial2Index[cam->serial];
 		cam->ID = TT_CameraID(cam->index);
+
+		// Position and orientation might change if continuous calibration is enabled, 
+		// so set these values every time.
+		// Set position.
+		cam->position.x = TT_CameraXLocation(cam->index);
+		cam->position.y = TT_CameraYLocation(cam->index);
+		cam->position.z = TT_CameraZLocation(cam->index);
+		// Set orientation.
+		glm::mat3 mat;
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				mat[i][j] = TT_CameraOrientationMatrix(cam->index, i * 3 + j);
+			}
+		}
+		cam->orientation = getQuaternion(mat);
 
 		// Update all information that changes every frame
 		cam->clearFrameData();

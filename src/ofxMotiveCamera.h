@@ -55,12 +55,17 @@ public:
 	bool pushSettings();
 	bool bPushSettings = false;
 
+	// Location Params
+	glm::vec3 position;		// this could change if continuous calibration is enabled
+	glm::quat orientation;
+
+	// Flag whether this camera may be misaligned.
+	bool flagPossibleMisalignment = false;
+	float avgFlagPossibleMisalignment = 0.0;
+	uint64_t lastPossibleMisalignmentTimeMS = 0;
+
 
 	// SETTINGS THAT CANNOT CHANGE:
-
-	// Location Params
-	glm::vec3 position;
-	glm::quat orientation;
 
 	// Image Params
 	glm::ivec2 resolution;

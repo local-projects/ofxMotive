@@ -16,11 +16,11 @@ struct MarkerContribution {
 	glm::vec2 centroid; // 2d location of the contributing point (raw?)
 };
 
-class Marker {
+class MotiveMarker {
 public:
 
-	Marker();
-	~Marker();
+	MotiveMarker();
+	~MotiveMarker();
 
 	glm::vec3 position;
 	Core::cUID ID;

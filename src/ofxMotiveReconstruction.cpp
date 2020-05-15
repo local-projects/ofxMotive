@@ -1,20 +1,20 @@
-#include "Reconstruction.h"
+#include "ofxMotiveReconstruction.h"
 
 // -----------------------------------------------------
-Reconstruction::Reconstruction() {
+MotiveReconstruction::MotiveReconstruction() {
 }
 
 // -----------------------------------------------------
-Reconstruction::~Reconstruction() {
+MotiveReconstruction::~MotiveReconstruction() {
 }
 
 // -----------------------------------------------------
-void Reconstruction::setupParams() {
+void MotiveReconstruction::setupParams() {
 
 }
 
 // -----------------------------------------------------
-void Reconstruction::update() {
+void MotiveReconstruction::update() {
 	
 	int nCameras = TT_CameraCount();
 
@@ -24,7 +24,7 @@ void Reconstruction::update() {
 	for (int i = 0; i < nMarkers; i++) {
 		
 		// Get all attributes of this marker
-		Marker m;
+		MotiveMarker m;
 		m.position.x = TT_FrameMarkerX(i);
 		m.position.y = TT_FrameMarkerY(i);
 		m.position.z = TT_FrameMarkerZ(i);

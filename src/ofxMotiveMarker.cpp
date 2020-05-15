@@ -1,4 +1,4 @@
-#include "Marker.h"
+#include "ofxMotiveMarker.h"
 
 // ----------------------------------------------------
 bool isMarkerActive(Core::cUID ID) {
@@ -11,15 +11,15 @@ int getActiveMarkerID(Core::cUID ID) {
 }
 
 // ----------------------------------------------------
-Marker::Marker() {
+MotiveMarker::MotiveMarker() {
 }
 
 // ----------------------------------------------------
-Marker::~Marker() {
+MotiveMarker::~MotiveMarker() {
 }
 
 // ----------------------------------------------------
-string Marker::getIDString() {
+string MotiveMarker::getIDString() {
 	return std::to_string(ID.HighBits()) + "-" + std::to_string(ID.LowBits());
 }
 

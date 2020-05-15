@@ -3,6 +3,7 @@
 // --------------------------------------------------------------
 ofxMotive::ofxMotive() {
 
+	status = new MotiveStatus();
 }
 
 // --------------------------------------------------------------
@@ -26,6 +27,8 @@ void ofxMotive::setupParams() {
 	RUI_SHARE_PARAM_WCN("Motive- Force Disconnect", bForceDisconnect);
 	RUI_SHARE_PARAM_WCN("Motive- Process All Frames", bProcessAllFrames);
 	RUI_SHARE_PARAM_WCN("Motive- Flush Camera Queues", bFlushCameraQueues);
+
+	status->setup();
 
 	reconstruction.setupParams();
 
@@ -127,13 +130,18 @@ bool ofxMotive::isSuccess(NPRESULT result, string fnctName) {
 
 // --------------------------------------------------------------
 bool ofxMotive::initialize() {
-	return isSuccess(TT_Initialize(), "Initialize");
+	bool bSuccess = isSuccess(TT_Initialize(), "Initialize");
+	if (bSuccess) status->attachListeners();
+	return bSuccess;
 }
 
 // --------------------------------------------------------------
 bool ofxMotive::shutdown() {
 	// this automatically saves the system calibration file "System Calibration.cal"
-	return isSuccess(TT_Shutdown(), "Shutdown");
+	status->detachListeners();
+	bool bSuccess = isSuccess(TT_Shutdown(), "Shutdown");
+	if (!bSuccess) status->attachListeners();
+	return bSuccess;
 }
 
 // --------------------------------------------------------------
@@ -270,8 +278,12 @@ void ofxMotive::processNewData() {
 		reconstruction.update();
 		unlock();
 
+		// Update the status of the system
+		status->update(reconstruction, cameras);
+
 		// Update the event
 		MotiveEventArgs args;
+		args.maybeNeedsCalibration = status->maybeNeedsCalibration();
 		// Add all markers
 		for (int i = 0; i < reconstruction.markers.size(); i++) {
 			MotiveOutputMarker o;
@@ -287,6 +299,7 @@ void ofxMotive::processNewData() {
 			o.serial = activeCams[i]->serial;
 			o.position = activeCams[i]->position;
 			o.orientation = activeCams[i]->orientation;
+			o.maybeNeedsCalibration = activeCams[i]->flagPossibleMisalignment;
 			args.cameras.push_back(o);
 		}
 
@@ -318,7 +331,7 @@ vector<MotiveOutputMarker> ofxMotive::get3DPoints() { // this is problematic
 	vector<MotiveOutputMarker> output;
 	lock();
 
-	vector<Marker> tmp = reconstruction.markers;
+	vector<MotiveMarker> tmp = reconstruction.markers;
 
 	unlock();
 	for (int i = 0; i < tmp.size(); i++) {
@@ -329,3 +342,18 @@ vector<MotiveOutputMarker> ofxMotive::get3DPoints() { // this is problematic
 	}
 	return output;
 }
+
+// --------------------------------------------------------------
+bool ofxMotive::maybeNeedsCalibration() {
+	return status == NULL ? false : status->maybeNeedsCalibration();
+}
+
+// --------------------------------------------------------------
+
+// --------------------------------------------------------------
+
+// --------------------------------------------------------------
+
+// --------------------------------------------------------------
+
+// --------------------------------------------------------------

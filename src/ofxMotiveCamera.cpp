@@ -1,4 +1,4 @@
-#include "MotiveCamera.h"
+#include "ofxMotiveCamera.h"
 
 // -----------------------------------------------------------
 MotiveCamera::MotiveCamera() {

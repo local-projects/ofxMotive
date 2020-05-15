@@ -13,8 +13,9 @@
 //#endif
 
 #include "ofxRemoteUIServer.h"
-#include "MotiveCameraSet.h"
-#include "Reconstruction.h"
+#include "ofxMotiveCameraSet.h"
+#include "ofxMotiveReconstruction.h"
+#include "ofxMotiveStatus.h"
 
 enum MotiveState {
 	MOTIVE_DISCONNECTED = 0,
@@ -33,6 +34,7 @@ struct MotiveOutputCamera {
 	glm::quat orientation;
 	int ID = -1;		// displayed on camera LED screen
 	int serial = -1;	// hardware serial number (unique to camera)
+	bool maybeNeedsCalibration = false;
 };
 
 // The event args output
@@ -40,6 +42,7 @@ class MotiveEventArgs : public ofEventArgs {
 public:
 	vector<MotiveOutputMarker> markers;
 	vector<MotiveOutputCamera> cameras;
+	bool maybeNeedsCalibration = false;
 };
 
 class ofxMotive : private ofThread {
@@ -85,6 +88,9 @@ public:
 
 	// Event that occurs when new data is received
 	ofEvent< MotiveEventArgs > newDataReceived;
+
+	// Is it possible that motive needs to be re-calibrated?
+	bool maybeNeedsCalibration();
 
 private:
 
@@ -133,6 +139,9 @@ private:
 
 	bool bFlushCameraQueues = false;
 
-	Reconstruction reconstruction;
+	MotiveReconstruction reconstruction;
+
+	MotiveStatus* status;
 
 };
+

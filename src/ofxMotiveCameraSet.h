@@ -5,7 +5,7 @@
 
 #include "NPTrackingTools.h"
 
-#include "MotiveCamera.h"
+#include "ofxMotiveCamera.h"
 
 
 class MotiveCameraSet {

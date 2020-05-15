@@ -91,19 +91,22 @@
 		<ClCompile Include="..\..\..\ExternalAddons\ofxRemoteUI\src\uriencode.cpp">
 			<Filter>local_addons\ofxRemoteUI\src</Filter>
 		</ClCompile>
-		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\Marker.cpp">
-			<Filter>local_addons\ofxMotive\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCamera.cpp">
-			<Filter>local_addons\ofxMotive\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCameraSet.cpp">
-			<Filter>local_addons\ofxMotive\src</Filter>
-		</ClCompile>
 		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotive.cpp">
 			<Filter>local_addons\ofxMotive\src</Filter>
 		</ClCompile>
-		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\Reconstruction.cpp">
+		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCamera.cpp">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCameraSet.cpp">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveMarker.cpp">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveReconstruction.cpp">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClCompile>
+		<ClCompile Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveStatus.cpp">
 			<Filter>local_addons\ofxMotive\src</Filter>
 		</ClCompile>
 	</ItemGroup>
@@ -284,19 +287,22 @@
 		<ClInclude Include="..\..\..\ExternalAddons\ofxRemoteUI\src\uriencode.h">
 			<Filter>local_addons\ofxRemoteUI\src</Filter>
 		</ClInclude>
-		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\Marker.h">
-			<Filter>local_addons\ofxMotive\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCamera.h">
-			<Filter>local_addons\ofxMotive\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\MotiveCameraSet.h">
-			<Filter>local_addons\ofxMotive\src</Filter>
-		</ClInclude>
 		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotive.h">
 			<Filter>local_addons\ofxMotive\src</Filter>
 		</ClInclude>
-		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\Reconstruction.h">
+		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCamera.h">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveCameraSet.h">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveMarker.h">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveReconstruction.h">
+			<Filter>local_addons\ofxMotive\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\..\..\ExternalAddons\ofxMotive\src\ofxMotiveStatus.h">
 			<Filter>local_addons\ofxMotive\src</Filter>
 		</ClInclude>
 	</ItemGroup>
