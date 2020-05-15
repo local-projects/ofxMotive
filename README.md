@@ -22,7 +22,7 @@ Since Motive only works in Windows, this addon has only been developed on Window
 
 1. Add this addon to your addons file.
 2. Generate your OF project with the Project Generator.
-3. Include the `Motive.props` property sheet. You can do this by opening the project in Visual Studios, navigating to the *Property Manager* window (under *View > Other Windows > Property Manager*), right clicking on your project and selecting *Add Existing Property Sheet*. Select the file *ofxMotive.props* included in this repo.
+3. Include the `ofxMotive.props` property sheet. You can do this by opening the project in Visual Studios, navigating to the *Property Manager* window (under *View > Other Windows > Property Manager*), right clicking on your project and selecting *Add Existing Property Sheet*. Select the file *ofxMotive.props* included in this repo.
 4. Add your Motive calibration (`.cal`) and profile (`.motive`) files to your project's `bin/data` folder. By default, ofxMotive looks for `calibration.cal` and `profile.motive`. If your files are named differently, you can either rename to match the default, or change the paths with ofxRemoteUI.
 
 ## Troubleshooting
