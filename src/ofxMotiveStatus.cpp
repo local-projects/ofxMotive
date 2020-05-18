@@ -26,7 +26,7 @@ void MotiveStatus::setup() {
 	RUI_NEW_GROUP("ofxMotive Status");
 	RUI_SHARE_PARAM_WCN("Motive- Passthrough Auto Cal", bPassthroughAutoCal);
 	RUI_SHARE_PARAM_WCN("Motive- Marker Count Easing", markerCountEasingParam, 0, 1);
-	RUI_SHARE_ENUM_PARAM_WCN("Motive- Fusion Mode", fusionMode, FUSE_SYSTEM_AND_CAMERAS, FUSE_SYSTEM_OR_CAMERAS, { "System And Cameras", "System Or Cameras", "None" });
+	RUI_SHARE_ENUM_PARAM_WCN("Motive- Fusion Mode", fusionMode, FUSE_SYSTEM_AND_CAMERAS, FUSE_NONE, { "System And Cameras", "System Or Cameras", "None" });
 	RUI_SHARE_PARAM_WCN("Motive- Fusion Timeout Sec", fusionTimeoutSec, 0, 86400);
 	RUI_SHARE_PARAM_WCN("Motive- Fusion Camera Easing", cameraFlagEase, 0, 1);
 	RUI_SHARE_PARAM_WCN("Motive- Fusion Camera Thresh", cameraFlagThreshold, 0, 1);
