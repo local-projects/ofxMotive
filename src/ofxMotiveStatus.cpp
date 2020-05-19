@@ -161,13 +161,11 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 
 				// ... The system needs recalibration.
 				bMaybeNeedsCalibration = true;
-				ofLogNotice() << "Needs calibration";
 
 				// ... Appropriate cameras need recalibration.
 				for (auto& c : activeCams) {
 					c->flagPossibleMisalignment = (c->lastPossibleMisalignmentTimeMS != 0) 
 						&& (float(thisTime - c->lastPossibleMisalignmentTimeMS) / 1000.0 <= fusionTimeoutSec);					
-					if (c->flagPossibleMisalignment) ofLogNotice() << "\tCamera " << c->ID;
 				}
 			}
 
