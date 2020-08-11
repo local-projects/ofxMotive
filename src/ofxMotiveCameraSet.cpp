@@ -253,6 +253,13 @@ MotiveCamera* MotiveCameraSet::getCameraFromSerial(int serial) {
 }
 
 // --------------------------------------------------------
+int MotiveCameraSet::getMaxFPS() {
+	int maxFPS = 0;
+	for (int i = 0; i < activeCams.size(); i++) {
+		maxFPS = max(maxFPS, getCamera(activeCams[i])->frameRate);
+	}
+	return maxFPS;
+}
 
 // --------------------------------------------------------
 

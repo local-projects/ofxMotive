@@ -34,6 +34,9 @@ public:
 
 	// TODO: Set settings of all cameras at once
 
+	// Get the maximum frame rate across all cameras
+	int getMaxFPS();
+
 
 private:
 

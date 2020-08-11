@@ -92,6 +92,10 @@ public:
 	// Is it possible that motive needs to be re-calibrated?
 	bool maybeNeedsCalibration();
 
+	// Get the maximum frame rate.
+	// Note: This may change depending on which cameras are connected
+	int getMaxFPS() { return cameras.getMaxFPS(); }
+
 private:
 
 	/// \brief Try to connect after some time of being disconnected
