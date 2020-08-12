@@ -255,12 +255,22 @@ void ofxMotive::threadedFunction() {
 
 // --------------------------------------------------------------
 bool ofxMotive::update(bool bSingleFrame) {
+	
+	// Update the system and retrieve the result
+	NPRESULT result = NPRESULT_SUCCESS;
 	if (bSingleFrame) {
-		return TT_UpdateSingleFrame() == NPRESULT_SUCCESS;
+		result = TT_UpdateSingleFrame();
 	}
 	else {
-		return TT_Update() == NPRESULT_SUCCESS;
+		result = TT_Update();
 	}
+	
+	// Return a bool and print any other useful information
+	if (result == NPRESULT_SUCCESS) return true;
+	else if (result != NPRESULT_NOFRAMEAVAILABLE) {
+		isSuccess(result, "Update");
+	}
+	return false;
 }
 
 // --------------------------------------------------------------
