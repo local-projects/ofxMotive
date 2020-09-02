@@ -305,6 +305,7 @@ void ofxMotive::threadedFunction() {
 		if (bFlushCameraQueues) {
 			bFlushCameraQueues = false;
 			RUI_PUSH_TO_CLIENT();
+			ofLogNotice("ofxMotive") << "Flushing camera queues.";
 			cameras.flushQueues();
 		}
 
@@ -361,13 +362,18 @@ bool ofxMotive::update(bool bSingleFrame) {
 	
 	// Update the system and retrieve the result
 	NPRESULT result = NPRESULT_SUCCESS;
+	double startTime = double(ofGetElapsedTimeMicros()) / 1000.0;
 	if (bSingleFrame) {
 		result = TT_UpdateSingleFrame();
 	}
 	else {
 		result = TT_Update();
 	}
-	
+	double stopTime = double(ofGetElapsedTimeMicros()) / 1000.0;
+	cout << "Update stops at time         " << stopTime << endl;
+	cout << "Update takes this time:      " << (stopTime-startTime) << endl;
+	//cout << "This frame timestamp is      " << TT_FrameTimeStamp() << endl;
+
 	// Return a bool and print any other useful information
 	if (result == NPRESULT_SUCCESS) return true;
 	else if (result != NPRESULT_NOFRAMEAVAILABLE) {

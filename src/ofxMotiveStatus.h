@@ -104,4 +104,10 @@ private:
 	float convertEaseParam(float param, float fromFPS, float toFPS) {
 		return exp(log(param) * fromFPS / toFPS);
 	}
+
+	void TTAPIFrameAvailable();
+
+	void InitialPointCloud(Core::cMarker* markers, int& markerCount, int maxMarkers);
+
+	bool RigidBodyMarkerWeights(Core::cUID rigidBodyID, int markerCount, bool* markerUtilization, float* markerWeights, Core::cMarkerf* markerLocations, Core::cMarkerf* pointCloudLocations);
 };

@@ -35,6 +35,8 @@ void MotiveStatus::setup() {
 // --------------------------------------------------------------
 bool MotiveStatus::ApplyContinuousCalibrationResult() {
 
+	cout << "Apply CC Result at time      " << double(ofGetElapsedTimeMicros()) / 1000.0 << endl;
+
 	// Mark that calibration wants to be appliedflagApplyContinuousCalibration
 	flagApplyContinuousCalibration = true;
 
@@ -194,10 +196,27 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 }
 
 // --------------------------------------------------------------
+void MotiveStatus::TTAPIFrameAvailable() {
+
+	cout << "Frame Available at time      " << double(ofGetElapsedTimeMicros())/1000.0 << endl;
+
+}
 
 // --------------------------------------------------------------
+void MotiveStatus::InitialPointCloud(Core::cMarker* markers, int& markerCount, int maxMarkers) {
+
+	cout << "Initial point cloud ready at " << double(ofGetElapsedTimeMicros())/1000.0 << endl;
+
+}
 
 // --------------------------------------------------------------
+bool MotiveStatus::RigidBodyMarkerWeights(Core::cUID rigidBodyID, int markerCount, bool* markerUtilization, float* markerWeights
+	, Core::cMarkerf* markerLocations, Core::cMarkerf* pointCloudLocations) {
+
+	cout << "Marker weights ready at      " << double(ofGetElapsedTimeMicros()) / 1000.0 << endl;
+
+	return false;
+}
 
 // --------------------------------------------------------------
 
