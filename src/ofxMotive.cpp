@@ -155,6 +155,7 @@ bool ofxMotive::loadProfile() {
 		if (ofFile::doesFileExist(defaultProfilePath, false))
 		{
 			profilePath = defaultProfilePath;
+			ofLogNotice("ofxMotive") << "Using default Motive profile in C:\\ProgramData";
 		}
 	}
 	
@@ -183,6 +184,7 @@ bool ofxMotive::loadCalibration() {
 		if (ofFile::doesFileExist(defaultCalibrationPath, false))
 		{
 			calibrationPath = defaultCalibrationPath;
+			ofLogNotice("ofxMotive") << "Using default Motive calibration in C:\\ProgramData";
 		}
 	}
 	
