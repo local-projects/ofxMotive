@@ -132,18 +132,21 @@ private:
 	// Should we override the setting concerning continuous calibration
 	// stored in the profile?
 	bool bOverrideContinuousCalibration = false;
-	enum ContinuousCalibrationType
-	{
+	enum ContinuousCalibrationType {
 		DISABLED = 0,
 		CONTINUOUS,
 		CONTINUOUS_AND_BUMPED_CAMERA,
 		NUM_TYPES
 	};
-	vector<string> getContinuousCalibrationTypes()
-	{
+	vector<string> getContinuousCalibrationTypes() {
 		return { "Disabled","Continuous","Continuous + Bumped Camera" };
 	}
 	ContinuousCalibrationType continuousCalibrationType = ContinuousCalibrationType::DISABLED;
+	bool getOverrideProfile(string refProfilePath, string& outProfilePath);
+	string getContinuousCalibrationTypeDescription(ContinuousCalibrationType type) {
+		auto types = getContinuousCalibrationTypes();
+		return types[int(type) % types.size()];
+	}
 
 	string calibrationPath = ofToDataPath("calibration.cal");; // should be a .cal file
 	bool bLoadDefaultCalibration = false; // default is located in C:/ProgramData/Optitrack/Motive

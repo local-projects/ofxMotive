@@ -151,6 +151,7 @@ bool ofxMotive::shutdown() {
 
 // --------------------------------------------------------------
 bool ofxMotive::loadProfile() {
+
 	// If we're loading the default profile, update the profile path
 	if (bLoadDefaultProfile)
 	{
@@ -158,16 +159,86 @@ bool ofxMotive::loadProfile() {
 		if (ofFile::doesFileExist(defaultProfilePath, false))
 		{
 			profilePath = defaultProfilePath;
+			RUI_PUSH_TO_CLIENT();
 			ofLogNotice("ofxMotive") << "Using default Motive profile in C:\\ProgramData";
 		}
 	}
 	
+	// Don't load if empty
 	if (profilePath == "") return false;
 
+	// Get the overriden profile
+	string tempProfilePath = profilePath;
+	bool bOverrideSuccessful = bOverrideContinuousCalibration && getOverrideProfile(profilePath, tempProfilePath);
+	if (bOverrideSuccessful) ofLogNotice("ofxMotive") << "Overriding Continuous Calibration settings to \"" << getContinuousCalibrationTypeDescription(continuousCalibrationType) << "\"";
+
 	// Load the profile
-	bool success = isSuccess(TT_LoadProfile(profilePath.c_str()), "Load Profile");
+	bool success = isSuccess(TT_LoadProfile(tempProfilePath.c_str()), "Load Profile");
 	if (success) ofLogNotice("ofxMotive") << "Loaded Profile: " << profilePath;
+
+	// Delete the temporary profile
+	if (bOverrideSuccessful) ofFile::removeFile(tempProfilePath, false);
+
 	return success;
+}
+
+// --------------------------------------------------------------
+bool ofxMotive::getOverrideProfile(string refProfilePath, string& outProfilePath) {
+
+	// Load the file
+	ofxXmlSettings xml;
+	if (!xml.loadFile(refProfilePath)) return false;
+
+	// Find the setting, if it exists
+	if (!xml.tagExists("Profile")) return false;
+	xml.pushTag("Profile");
+	if (!xml.tagExists("PropertyWarehouse")) return false;
+	xml.pushTag("PropertyWarehouse");
+	if (!xml.tagExists("properties")) return false;
+	xml.pushTag("properties");
+
+	// Get the value we will set
+	string value = ofToString(int(continuousCalibrationType));
+
+	// Search for the cc element.
+	bool bFoundContinuousCalibration = false;
+	for (int i = 0; i < xml.getNumTags("property"); i++) {
+		xml.pushTag("property", i);
+		if (xml.tagExists("name") && 
+			xml.getValue("name", "").compare("ContinuousCalibration") == 0) {
+			// We found the continuous calibration element.
+			// Set its value.
+			if (xml.tagExists("value")) xml.setValue("value", value);
+			else xml.addValue("value", value);
+			// Flag that we found this element.
+			bFoundContinuousCalibration = true;
+			break;
+		}
+		xml.popTag();
+	}
+
+	// If we didn't find the element, add it
+	if (!bFoundContinuousCalibration) {
+		xml.addTag("property");
+		xml.pushTag("property", xml.getNumTags("property") - 1);
+		xml.addValue("name", "ContinuousCalibration");
+		xml.addValue("value", value);
+		xml.addValue("defaultValue", "0");
+	}
+
+	// Get a path to the profile
+	string tmpPath = ofToDataPath(".tmp-profile.motive", true);
+	if (ofFile::doesFileExist(tmpPath)) ofFile::removeFile(tmpPath, false);
+
+	// Save the xml file
+	bool bSaved = xml.saveFile(tmpPath);
+	if (!bSaved) {
+		if (ofFile::doesFileExist(tmpPath)) ofFile::removeFile(tmpPath, false);
+		return false;
+	}
+
+	outProfilePath = tmpPath;
+	return true;
 }
 
 // --------------------------------------------------------------
@@ -187,6 +258,7 @@ bool ofxMotive::loadCalibration() {
 		if (ofFile::doesFileExist(defaultCalibrationPath, false))
 		{
 			calibrationPath = defaultCalibrationPath;
+			RUI_PUSH_TO_CLIENT();
 			ofLogNotice("ofxMotive") << "Using default Motive calibration in C:\\ProgramData";
 		}
 	}
