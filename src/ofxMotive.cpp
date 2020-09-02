@@ -29,6 +29,9 @@ void ofxMotive::setupParams() {
 	RUI_SHARE_PARAM_WCN("Motive- Force Disconnect", bForceDisconnect);
 	RUI_SHARE_PARAM_WCN("Motive- Process All Frames", bProcessAllFrames);
 	RUI_SHARE_PARAM_WCN("Motive- Flush Camera Queues", bFlushCameraQueues);
+	RUI_SHARE_PARAM_WCN("Motive- Override Continuous Calib", bOverrideContinuousCalibration);
+	vector<string> cctypes = getContinuousCalibrationTypes();
+	RUI_SHARE_ENUM_PARAM_WCN("Motive- Continuous Calib Type", continuousCalibrationType, ContinuousCalibrationType::DISABLED, ContinuousCalibrationType::NUM_TYPES - 1, cctypes);
 
 	status->setup();
 
