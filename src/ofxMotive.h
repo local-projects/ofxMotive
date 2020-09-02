@@ -123,12 +123,14 @@ private:
 	bool bForceDisconnect = false;
 
 	string profilePath = ofToDataPath("profile.motive");; // should be a .motive file (actually xml)
+	bool bLoadDefaultProfile = false; // default is located in C:/ProgramData/Optitrack
 	bool bForceLoadProfile = false;
 	bool loadProfile();
 	bool bSaveProfile = false;
 	bool saveProfile();
 
 	string calibrationPath = ofToDataPath("calibration.cal");; // should be a .cal file
+	bool bLoadDefaultCalibration = false; // default is located in C:/ProgramData/Optitrack/Motive
 	bool bForceLoadCalibration = false;
 	bool loadCalibration();
 

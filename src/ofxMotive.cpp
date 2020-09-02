@@ -20,9 +20,11 @@ void ofxMotive::setupParams() {
 	RUI_SHARE_PARAM_WCN("Motive- Try Connect Timestep", tryConnectTimestep, 0, 10000);
 	RUI_SHARE_PARAM_WCN("Motive- Max Try Connect Attempts", maxTryConnectAttempts, 1, 10);
 	RUI_SHARE_PARAM_WCN("Motive- Profile Path", profilePath);
+	RUI_SHARE_PARAM_WCN("Motive- Load Default Profile", bLoadDefaultProfile);
 	RUI_SHARE_PARAM_WCN("Motive- Reload Profile", bForceLoadProfile);
 	RUI_SHARE_PARAM_WCN("Motive- Save Profile", bSaveProfile);
 	RUI_SHARE_PARAM_WCN("Motive- Calibration Path", calibrationPath);
+	RUI_SHARE_PARAM_WCN("Motive- Load Default Calibration", bLoadDefaultCalibration);
 	RUI_SHARE_PARAM_WCN("Motive- Reload Calibration", bForceLoadCalibration);
 	RUI_SHARE_PARAM_WCN("Motive- Force Disconnect", bForceDisconnect);
 	RUI_SHARE_PARAM_WCN("Motive- Process All Frames", bProcessAllFrames);
@@ -146,7 +148,19 @@ bool ofxMotive::shutdown() {
 
 // --------------------------------------------------------------
 bool ofxMotive::loadProfile() {
+	// If we're loading the default profile, update the profile path
+	if (bLoadDefaultProfile)
+	{
+		string defaultProfilePath = "C:\\ProgramData\\OptiTrack\\MotiveProfile.motive";
+		if (ofFile::doesFileExist(defaultProfilePath, false))
+		{
+			profilePath = defaultProfilePath;
+		}
+	}
+	
 	if (profilePath == "") return false;
+
+	// Load the profile
 	bool success = isSuccess(TT_LoadProfile(profilePath.c_str()), "Load Profile");
 	if (success) ofLogNotice("ofxMotive") << "Loaded Profile: " << profilePath;
 	return success;
@@ -162,7 +176,19 @@ bool ofxMotive::saveProfile() {
 
 // --------------------------------------------------------------
 bool ofxMotive::loadCalibration() {
+	// If we're loading the default cal, update the cal path
+	if (bLoadDefaultCalibration)
+	{
+		string defaultCalibrationPath = "C:\\ProgramData\\OptiTrack\\Motive\\System Calibration.cal";
+		if (ofFile::doesFileExist(defaultCalibrationPath, false))
+		{
+			calibrationPath = defaultCalibrationPath;
+		}
+	}
+	
 	if (calibrationPath == "") return false;
+
+	// Load the calibration
 	bool success = isSuccess(TT_LoadCalibration(calibrationPath.c_str()), "Load Calibration");
 	if (success) ofLogNotice("ofxMotive") << "Loaded Calibration: " << calibrationPath;
 	return success;
