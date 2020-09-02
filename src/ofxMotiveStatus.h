@@ -53,7 +53,7 @@ private:
 
 	// This override's Motive's function
 	bool ApplyContinuousCalibrationResult();
-	bool flagApplyContinuoutCalibration = false;
+	bool flagApplyContinuousCalibration = false;
 	// When was the last time Motive's API called to apply 
 	// a continuous calibration result?
 	uint64_t lastContinuousCalibrationCalledTimeMS = 0; // milliseconds

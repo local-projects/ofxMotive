@@ -35,8 +35,8 @@ void MotiveStatus::setup() {
 // --------------------------------------------------------------
 bool MotiveStatus::ApplyContinuousCalibrationResult() {
 
-	// Mark that calibration wants to be applied
-	flagApplyContinuoutCalibration = true;
+	// Mark that calibration wants to be appliedflagApplyContinuousCalibration
+	flagApplyContinuousCalibration = true;
 
 	// Return true to allow it to be applied
 	return bPassthroughAutoCal;
@@ -127,8 +127,8 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 	}
 
 	// Store the time of receiving the continuous calibration call
-	if (flagApplyContinuoutCalibration) {
-		flagApplyContinuoutCalibration = false;
+	if (flagApplyContinuousCalibration) {
+		flagApplyContinuousCalibration = false;
 
 		bMaybeNeedsCalibration = true;
 		lastContinuousCalibrationCalledTimeMS = thisTime;
