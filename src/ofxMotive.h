@@ -128,6 +128,7 @@ private:
 	bool loadProfile();
 	bool bSaveProfile = false;
 	bool saveProfile();
+	string getDefaultProfilePath();
 
 	// Should we override the setting concerning continuous calibration
 	// stored in the profile?
@@ -152,6 +153,7 @@ private:
 	bool bLoadDefaultCalibration = false; // default is located in C:/ProgramData/Optitrack/Motive
 	bool bForceLoadCalibration = false;
 	bool loadCalibration();
+	string getDefaultCalibrationPath();
 
 	bool initialize();
 	bool update(bool bSingleFrame = false);

@@ -150,17 +150,50 @@ bool ofxMotive::shutdown() {
 }
 
 // --------------------------------------------------------------
+string ofxMotive::getDefaultProfilePath() {
+
+	// Attempt to find this file
+
+	string npt_inc = ofGetEnv("NPTRACKINGTOOLS_INC");
+	if (!npt_inc.empty()) {
+		string path = ofFilePath::join(ofFilePath::getEnclosingDirectory(
+			ofFilePath::getEnclosingDirectory(npt_inc, false), false),
+			"MotiveProfile.motive");
+		if (ofFile::doesFileExist(path, false)) {
+			return path;
+		}
+	}
+
+	string npt_lib = ofGetEnv("NPTRACKINGTOOLS_LIB");
+	if (!npt_lib.empty()) {
+		string path = ofFilePath::join(ofFilePath::getEnclosingDirectory(
+			ofFilePath::getEnclosingDirectory(npt_inc, false), false),
+			"MotiveProfile.motive");
+		if (ofFile::doesFileExist(path, false)) {
+			return path;
+		}
+	}
+
+	string path = "C:\\ProgramData\\OptiTrack\\MotiveProfile.motive";
+	if (ofFile::doesFileExist(path, false)) {
+		return path;
+	}
+
+	return "";
+}
+
+// --------------------------------------------------------------
 bool ofxMotive::loadProfile() {
 
 	// If we're loading the default profile, update the profile path
 	if (bLoadDefaultProfile)
 	{
-		string defaultProfilePath = "C:\\ProgramData\\OptiTrack\\MotiveProfile.motive";
+		string defaultProfilePath = getDefaultProfilePath();
 		if (ofFile::doesFileExist(defaultProfilePath, false))
 		{
 			profilePath = defaultProfilePath;
 			RUI_PUSH_TO_CLIENT();
-			ofLogNotice("ofxMotive") << "Using default Motive profile in C:\\ProgramData";
+			ofLogNotice("ofxMotive") << "Using default Motive profile \"" << profilePath << "\"";
 		}
 	}
 	
@@ -250,16 +283,48 @@ bool ofxMotive::saveProfile() {
 }
 
 // --------------------------------------------------------------
+string ofxMotive::getDefaultCalibrationPath() {
+
+	// Attempt to find this file
+
+	string npt_inc = ofGetEnv("NPTRACKINGTOOLS_INC");
+	if (!npt_inc.empty()) {
+		string path = ofFilePath::join(ofFilePath::getEnclosingDirectory(npt_inc, false),
+			"System Calibration.cal");
+		if (ofFile::doesFileExist(path, false)) {
+			return path;
+		}
+	}
+
+	string npt_lib = ofGetEnv("NPTRACKINGTOOLS_LIB");
+	if (!npt_lib.empty()) {
+		string path = ofFilePath::join(ofFilePath::getEnclosingDirectory(npt_lib, false),
+			"System Calibration.cal");
+		if (ofFile::doesFileExist(path, false)) {
+			return path;
+		}
+	}
+
+	string path = "C:\\ProgramData\\OptiTrack\\Motive\\System Calibration.cal";
+	if (ofFile::doesFileExist(path, false)) {
+		return path;
+	}
+
+	return "";
+}
+
+// --------------------------------------------------------------
 bool ofxMotive::loadCalibration() {
+
 	// If we're loading the default cal, update the cal path
 	if (bLoadDefaultCalibration)
 	{
-		string defaultCalibrationPath = "C:\\ProgramData\\OptiTrack\\Motive\\System Calibration.cal";
-		if (ofFile::doesFileExist(defaultCalibrationPath, false))
+		string defaultCalibrationPath = getDefaultCalibrationPath();
+		if (!defaultCalibrationPath.empty() && ofFile::doesFileExist(defaultCalibrationPath, false))
 		{
 			calibrationPath = defaultCalibrationPath;
 			RUI_PUSH_TO_CLIENT();
-			ofLogNotice("ofxMotive") << "Using default Motive calibration in C:\\ProgramData";
+			ofLogNotice("ofxMotive") << "Using default Motive calibration \"" << calibrationPath << "\"";
 		}
 	}
 	
