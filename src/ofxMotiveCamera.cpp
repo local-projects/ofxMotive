@@ -20,7 +20,7 @@ void MotiveCamera::setupParams() {
 	RUI_SHARE_ENUM_PARAM_WCN("State "+fpt(),camState, eCameraStates::Camera_Enabled, eCameraStates::CameraStatesCount, cameraStateNames);
 	string cameraModeNames[] = {"Invalid", "Segment", "Raw Grayscale", "Object", "Precision", "MJPEG"};
 	RUI_SHARE_ENUM_PARAM_WCN("Mode "+fpt(),camMode, MOTIVE_CAMERA_MODE_INVALID, MOTIVE_CAMERA_MODE_MJPEG, cameraModeNames);
-	RUI_SHARE_PARAM_WCN("Exposure "+fpt(), exposure, 1, 480);
+	RUI_SHARE_PARAM_WCN("Exposure "+fpt(), exposure, 1, 4800);
 	RUI_SHARE_PARAM_WCN("Threshold "+fpt(), threshold, 0, 255);
 	RUI_SHARE_PARAM_WCN("IR Intensity "+fpt(), intensity, 0, 15);
 	RUI_SHARE_PARAM_WCN("Frame Rate "+fpt(), frameRate, 1, 240);
@@ -45,7 +45,7 @@ bool MotiveCamera::pushSettings() {
 	if (!TT_SetCameraSettings(
 		index,
 		getVideoType(),
-		CLAMP(exposure, 1, 480),
+		CLAMP(exposure, 1, 4800),
 		CLAMP(threshold, 0, 255),
 		CLAMP(intensity, 0, 15))) {
 		ofLogNotice("ofxMotive : Camera " + ofToString(serial)) << "Could not set camera video type, exposure, threshold or intensity";
