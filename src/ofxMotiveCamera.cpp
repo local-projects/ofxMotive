@@ -13,7 +13,7 @@ MotiveCamera::~MotiveCamera() {
 // -----------------------------------------------------------
 void MotiveCamera::setupParams() {
 
-	RUI_NEW_GROUP("Camera " + ofToString(serial));
+	RUI_NEW_GROUP("ofxMotive Camera " + ofToString(serial));
 	RUI_SHARE_PARAM_WCN("ID "+fpt(), ID, -1, 1000);
 	RUI_SHARE_PARAM_WCN("Connected "+fpt(), bConnected);
 	MotiveCameraSettings::shareParams(fpt());

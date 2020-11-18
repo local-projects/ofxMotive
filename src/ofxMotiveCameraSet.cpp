@@ -24,7 +24,7 @@ MotiveCameraSet::~MotiveCameraSet() {
 void MotiveCameraSet::setupParams() {
 
 	// Setup template camera params
-	RUI_NEW_GROUP("Motive Camera Set");
+	RUI_NEW_GROUP("ofxMotive Camera Set");
 	RUI_SHARE_PARAM_WCN("Init Cams With Defaults", bInitWithDefaults);
 	RUI_SHARE_PARAM_WCN("Push Defaults to All Cams", bPushDefaults);
 	defaultCameraSettings.shareParams("[DEFAULT]");
