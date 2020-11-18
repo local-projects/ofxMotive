@@ -12,6 +12,11 @@ MotiveCameraSet::~MotiveCameraSet() {
 
 // --------------------------------------------------------
 void MotiveCameraSet::setupParams() {
+
+	// Setup template camera params
+
+
+	// Setup individual camera params
 	map<int, MotiveCamera*>::iterator it;
 	for (it = cams.begin(); it != cams.end(); it++) {
 		it->second->setupParams();
@@ -182,7 +187,6 @@ void MotiveCameraSet::update() {
 		if (cam->bPushSettings) {
 			cam->bPushSettings = false;
 			cam->pushSettings();
-			RUI_PUSH_TO_CLIENT();
 		}
 
 		// Set or clear a mask

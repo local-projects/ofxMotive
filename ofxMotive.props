@@ -24,6 +24,9 @@
     <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCamera.cpp">
       <Filter>local_addons\ofxMotive\src</Filter>
     </ClCompile>
+    <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCameraSettings.cpp">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClCompile>
     <ClCompile Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCameraSet.cpp">
       <Filter>local_addons\ofxMotive\src</Filter>
     </ClCompile>
@@ -42,6 +45,9 @@
       <Filter>local_addons\ofxMotive\src</Filter>
     </ClInclude>
     <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCamera.h">
+      <Filter>local_addons\ofxMotive\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCameraSettings.h">
       <Filter>local_addons\ofxMotive\src</Filter>
     </ClInclude>
     <ClInclude Include="$(OFXMOTIVE_ROOT)\src\ofxMotiveCameraSet.h">
