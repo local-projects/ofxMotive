@@ -35,7 +35,7 @@ bool MotiveCamera::pushSettings() {
 	bool success = true;
 	if (!TT_SetCameraSettings(
 		index,
-		getVideoType(),
+		getTTVideoType(),
 		exposure,
 		CLAMP(threshold, 0, 255),
 		CLAMP(intensity, 0, 15))) {

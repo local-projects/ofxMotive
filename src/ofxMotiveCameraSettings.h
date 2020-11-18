@@ -24,6 +24,8 @@ public:
 	// Setup params for the RUI per camera
 	void shareParams(string fpt = "");
 
+	// Copy settings from another object
+	void copySettingsFrom(MotiveCameraSettings& a);
 
 	// ====================================
 	// SETTABLE PARAMETERS
@@ -41,11 +43,9 @@ public:
 
 	// Image mode
 	MotiveCameraMode camMode = MOTIVE_CAMERA_MODE_INVALID;
-	// Set the video/camera mode
-	void setVideoType(int _type);
-	void setCameraMode(MotiveCameraMode _mode);
-	int getVideoType();
-	MotiveCameraMode getCameraMode();
+	// Helpers for getting and setting NP(T)racking(T)ools' native video types
+	void setTTVideoType(int _type);
+	int getTTVideoType();
 
 	// Image Quality
 	// initialized to arbitrary number

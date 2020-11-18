@@ -26,25 +26,20 @@ void MotiveCameraSettings::shareParams(string fpt) {
 }
 
 // -----------------------------------------------------------
-void MotiveCameraSettings::setCameraMode(MotiveCameraMode _mode) {
-	camMode = _mode;
-}
-
-// -----------------------------------------------------------
-void MotiveCameraSettings::setVideoType(int _type) {
+void MotiveCameraSettings::setTTVideoType(int _type) {
 
 	switch (_type) {
-	case -1: setCameraMode(MOTIVE_CAMERA_MODE_INVALID); break;
-	case 0: setCameraMode(MOTIVE_CAMERA_MODE_SEGMENT); break;
-	case 1: setCameraMode(MOTIVE_CAMERA_MODE_RAW_GRAYSCALE); break;
-	case 4: setCameraMode(MOTIVE_CAMERA_MODE_PRECISION); break;
-	case 6: setCameraMode(MOTIVE_CAMERA_MODE_MJPEG); break;
-	case 2: default: setCameraMode(MOTIVE_CAMERA_MODE_OBJECT); break;
+	case -1: camMode = MOTIVE_CAMERA_MODE_INVALID; break;
+	case 0: camMode = MOTIVE_CAMERA_MODE_SEGMENT; break;
+	case 1: camMode = MOTIVE_CAMERA_MODE_RAW_GRAYSCALE; break;
+	case 4: camMode = MOTIVE_CAMERA_MODE_PRECISION; break;
+	case 6: camMode = MOTIVE_CAMERA_MODE_MJPEG; break;
+	case 2: default: camMode = MOTIVE_CAMERA_MODE_OBJECT; break;
 	}
 }
 
 // -----------------------------------------------------------
-int MotiveCameraSettings::getVideoType() {
+int MotiveCameraSettings::getTTVideoType() {
 
 	switch (camMode) {
 	case MOTIVE_CAMERA_MODE_SEGMENT: return 0; break;
@@ -56,11 +51,17 @@ int MotiveCameraSettings::getVideoType() {
 }
 
 // -----------------------------------------------------------
-MotiveCameraMode MotiveCameraSettings::getCameraMode() {
-	return camMode;
-}
+void MotiveCameraSettings::copySettingsFrom(MotiveCameraSettings& a) {
 
-// -----------------------------------------------------------
+	camState = a.camState;
+	exposure = a.exposure;
+	threshold = a.threshold;
+	intensity = a.intensity;
+	frameRate = a.frameRate;
+	imagerGain = a.imagerGain;
+	camMode = a.camMode;
+	mjpegQuality = a.mjpegQuality;
+}
 
 // -----------------------------------------------------------
 
