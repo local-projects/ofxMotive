@@ -114,8 +114,10 @@ void MotiveCameraSet::update() {
 	}
 
 	// Update the connection status of disconnected cameras
+	// and remove their parameters from the RUI
 	for (int i = 0; i < lostCams.size(); i++) {
 		getCamera(lostCams[i])->bConnected = false;
+		getCamera(lostCams[i])->disableParams();
 	}
 
 	// Add any new cameras and set their status to connected

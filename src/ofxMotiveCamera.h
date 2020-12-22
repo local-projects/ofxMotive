@@ -14,6 +14,7 @@ public:
 
 	// Setup params for the RUI per camera
 	void setupParams();
+	void disableParams();
 
 
 	// ====================================
@@ -94,5 +95,6 @@ private:
 	// Get this camera's fingerprint
 	string fpt();
 
+	bool bSetupParams = false;
 };
 

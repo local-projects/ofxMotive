@@ -26,6 +26,19 @@ void MotiveCameraSettings::shareParams(string fpt) {
 }
 
 // -----------------------------------------------------------
+void MotiveCameraSettings::unshareParams(string fpt)
+{
+	RUI_REMOVE_PARAM_WCN("State " + fpt);
+	RUI_REMOVE_PARAM_WCN("Mode " + fpt);
+	RUI_REMOVE_PARAM_WCN("Exposure " + fpt);
+	RUI_REMOVE_PARAM_WCN("Threshold " + fpt);
+	RUI_REMOVE_PARAM_WCN("IR Intensity " + fpt);
+	RUI_REMOVE_PARAM_WCN("Frame Rate " + fpt);
+	RUI_REMOVE_PARAM_WCN("Imager Gain " + fpt);
+	RUI_REMOVE_PARAM_WCN("MJPEG Quality " + fpt);
+}
+
+// -----------------------------------------------------------
 void MotiveCameraSettings::setTTVideoType(int _type) {
 
 	switch (_type) {

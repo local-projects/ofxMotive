@@ -23,6 +23,7 @@ public:
 
 	// Setup params for the RUI per camera
 	void shareParams(string fpt = "");
+	void unshareParams(string fpt = "");
 
 	// Copy settings from another object
 	void copySettingsFrom(MotiveCameraSettings& a);
