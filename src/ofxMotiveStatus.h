@@ -26,6 +26,9 @@ public:
 	// needs to be done again?)
 	bool maybeNeedsCalibration() { return bMaybeNeedsCalibration; }
 
+	// Is it possible that Motive's calibration file is empty (default)?
+	bool maybeEmptyCalibration() { return bMaybeEmptyCalibration; }
+
 private:
 	
 	// How many markers fill each bin for a given camera?
@@ -60,6 +63,7 @@ private:
 	// Should continuous calibration results be allowed to applied?
 	bool bPassthroughAutoCal = true;
 
+	void updateCameraMisalignmentFlags(MotiveReconstruction& recon, MotiveCameraSet& cams);
 	// Does motive maybe need calibration?
 	bool bMaybeNeedsCalibration = false;
 	// Should we use sensor fusion across these two sources of information
@@ -104,4 +108,12 @@ private:
 	float convertEaseParam(float param, float fromFPS, float toFPS) {
 		return exp(log(param) * fromFPS / toFPS);
 	}
+
+	// Is the calibration file empty?
+	// If so, then we will observe the cameras sitting in a
+	// perfect line.
+	// (epsilon in meters)
+	void updateEmptyCalibrationFlags(MotiveCameraSet& _cams);
+	bool isCalibrationEmpty(MotiveCameraSet& cams, float epsilon = 0.001);
+	bool bMaybeEmptyCalibration = false;
 };

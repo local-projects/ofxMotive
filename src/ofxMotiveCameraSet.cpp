@@ -3,6 +3,16 @@
 // --------------------------------------------------------
 MotiveCameraSet::MotiveCameraSet() {
 
+	// Set default camera settings
+	// (these are arbitrary, but should not be invalid)
+	defaultCameraSettings.camMode = MotiveCameraMode::MOTIVE_CAMERA_MODE_OBJECT;
+	defaultCameraSettings.camState = eCameraStates::Camera_Enabled;
+	defaultCameraSettings.exposure = 2000;
+	defaultCameraSettings.threshold = 128;
+	defaultCameraSettings.frameRate = 240;
+	defaultCameraSettings.imagerGain = 3;
+	defaultCameraSettings.intensity = 15;
+	defaultCameraSettings.mjpegQuality = 50;
 }
 
 // --------------------------------------------------------
@@ -12,6 +22,14 @@ MotiveCameraSet::~MotiveCameraSet() {
 
 // --------------------------------------------------------
 void MotiveCameraSet::setupParams() {
+
+	// Setup template camera params
+	RUI_NEW_GROUP("ofxMotive Camera Set");
+	RUI_SHARE_PARAM_WCN("Init Cams With Defaults", bInitWithDefaults);
+	RUI_SHARE_PARAM_WCN("Push Defaults to All Cams", bPushDefaults);
+	defaultCameraSettings.shareParams("[DEFAULT]");
+
+	// Setup individual camera params
 	map<int, MotiveCamera*>::iterator it;
 	for (it = cams.begin(); it != cams.end(); it++) {
 		it->second->setupParams();
@@ -82,7 +100,7 @@ void MotiveCameraSet::update() {
 			if (i != 0) ss << ", ";
 			ss << lostCams[i];
 		}
-		ofLogNotice("Motive Camera Set") << ss.str();
+		ofLogNotice("ofxMotive : Camera Set") << ss.str();
 	}
 	// ... if we've connected with any new ones
 	if (newCams.size() > 0) {
@@ -92,12 +110,17 @@ void MotiveCameraSet::update() {
 			if (i != 0) ss << ", ";
 			ss << newCams[i];
 		}
-		ofLogNotice("Motive Camera Set") << ss.str();
+		ofLogNotice("ofxMotive : Camera Set") << ss.str();
 	}
 
 	// Update the connection status of disconnected cameras
 	for (int i = 0; i < lostCams.size(); i++) {
 		getCamera(lostCams[i])->bConnected = false;
+
+		// TODO: Ideally, we would also remove their parameters from the RUI,
+		// but the RUI does not currently allow parameters to be re-added to prior
+		// groups once removed.
+		//getCamera(lostCams[i])->disableParams();
 	}
 
 	// Add any new cameras and set their status to connected
@@ -120,7 +143,7 @@ void MotiveCameraSet::update() {
 		// frame rate
 		cam->frameRate = TT_CameraFrameRate(cam->index);
 		// video type
-		cam->setVideoType(TT_CameraVideoType(cam->index));
+		cam->setTTVideoType(TT_CameraVideoType(cam->index));
 		// exposure
 		cam->exposure = TT_CameraExposure(cam->index);
 		// threshold
@@ -133,8 +156,29 @@ void MotiveCameraSet::update() {
 		// mask settings
 
 		// Create new parameter groups
-		ofLogNotice("Camera Set") << "Adding new camera " << cam->serial;
 		cam->setupParams();
+
+		// If we're initializing the cameras with defaults, then 
+		// set the default settable params and push.
+		if (bInitWithDefaults) {
+			cam->copySettingsFrom(defaultCameraSettings);
+			cam->pushSettings();
+		}
+
+		ofLogNotice("ofxMotive : Camera Set") << "Adding new camera " << cam->serial << 
+			(bInitWithDefaults ? " with default settings" : "");
+	}
+	
+	// Update settings for all cameras, if need be
+	if (bPushDefaults) {
+		bPushDefaults = false;
+		RUI_PUSH_TO_CLIENT();
+		for (int i = 0; i < activeCams.size(); i++) {
+			MotiveCamera* cam = getCamera(activeCams[i]);
+			cam->copySettingsFrom(defaultCameraSettings);
+			cam->pushSettings();
+		}
+		ofLogNotice("ofxMotive : Camera Set") << "Pushed default settings to all cameras";
 	}
 
 	// Now, process all current cameras
@@ -182,7 +226,6 @@ void MotiveCameraSet::update() {
 		if (cam->bPushSettings) {
 			cam->bPushSettings = false;
 			cam->pushSettings();
-			RUI_PUSH_TO_CLIENT();
 		}
 
 		// Set or clear a mask

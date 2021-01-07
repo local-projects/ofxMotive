@@ -57,5 +57,12 @@ private:
 
 	// Utility functions
 	glm::quat getQuaternion(glm::mat3& rotationMatrix);
+	
+	// Global/Template camera settings
+	MotiveCameraSettings defaultCameraSettings;
+	// Should new cameras be initialized with these default settings?
+	bool bInitWithDefaults = false;
+	// Should we push default settings to all cams at any point in time?
+	bool bPushDefaults = false;
 };
 

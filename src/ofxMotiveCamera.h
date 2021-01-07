@@ -2,19 +2,11 @@
 
 #include "ofMain.h"
 #include "ofxRemoteUIServer.h"
+#include "ofxMotiveCameraSettings.h"
 
 #include "NPTrackingTools.h"
 
-enum MotiveCameraMode {
-	MOTIVE_CAMERA_MODE_INVALID = -1,
-	MOTIVE_CAMERA_MODE_SEGMENT, // 0
-	MOTIVE_CAMERA_MODE_RAW_GRAYSCALE, // 1
-	MOTIVE_CAMERA_MODE_OBJECT, // 2
-	MOTIVE_CAMERA_MODE_PRECISION, // 4
-	MOTIVE_CAMERA_MODE_MJPEG // 6
-};
-
-class MotiveCamera {
+class MotiveCamera : public MotiveCameraSettings {
 public:
 
 	MotiveCamera();
@@ -22,7 +14,15 @@ public:
 
 	// Setup params for the RUI per camera
 	void setupParams();
+	// TODO: Disabling parameters works with RUI, but RUI does not allow
+	// parameter groups to be disabled. As a result, this function does not
+	// currently work as intended.
+	//void disableParams();
 
+
+	// ====================================
+	// IDENTIFIABLE PARAMETERS
+	// (params used to identify this camera)
 
 	// Identifiers for each camera
 	int index = -1;				// index in the array of active cameras from TT_CameraCount()
@@ -30,56 +30,54 @@ public:
 	int serial = -1;			// unique for a camera
 	string name = "";			// name and serial number
 
+
+	// ====================================
+	// UNSETTABLE, UNCHANGING PARAMETERS
+	// (cannot be set by user, don't change over the course of execution)
+
+	// Number of available gain levels
+	int imagerGainLevels = 1; 
+
+	// Image Params
+	glm::ivec2 resolution;
+
+
+	// ====================================
+	// UNSETTABLE, CHANGING PARAMETERS
+	// (cannot be set by user; may change over the course of execution)
+
 	// Is the camera currently online?
 	bool bConnected = false;
-	// Is the camera enabled for reconstruction?
-	eCameraStates camState = Camera_Enabled;
+
+	// Location Params
+	// (can change if continuous calibration is enabled)
+	glm::vec3 position;
+	glm::quat orientation;
+
+	// Camera temperature
+	float temperature; // celcius
 
 
-	// SETTINGS THAT CAN CHANGE:
+	// ====================================
+	// SETTABLE PARAMETERS
+	// (can be set by user)
 
-	// Capture params
-	int exposure = 0; // in microseconds (max: 480)
-	int threshold = 0;
-	int intensity = 0; // intensity of IR light
-	int frameRate;
-	int imagerGain;
-	int imagerGainLevels; // available gain levels
+	// (These are inherited from MotiveCameraSettings
 
-	// Image Quality
-	// initialized to arbitrary number
-	// [0, 100] (low --> high quality)
-	int mjpegQuality = 50;
+	// -------------------------------------
 
 	// This pushes video type, exposure, thresh and intensity to the camera
 	bool pushSettings();
 	bool bPushSettings = false;
 
-	// Location Params
-	glm::vec3 position;		// this could change if continuous calibration is enabled
-	glm::quat orientation;
+
+	// ====================================
+	// MISC HELPERS
 
 	// Flag whether this camera may be misaligned.
 	bool flagPossibleMisalignment = false;
 	float avgFlagPossibleMisalignment = 0.0;
 	uint64_t lastPossibleMisalignmentTimeMS = 0;
-
-
-	// SETTINGS THAT CANNOT CHANGE:
-
-	// Image Params
-	glm::ivec2 resolution;
-
-	// Camera temperature
-	float temperature; // celcius
-
-	
-	// Set the video/camera mode
-	void setVideoType(int _type);
-	void setCameraMode(MotiveCameraMode _mode);
-	int getVideoType();
-	MotiveCameraMode getCameraMode();
-
 
 	// call this after disconnecting
 	void clearFrameData();
@@ -88,23 +86,18 @@ public:
 	// Markers
 	vector<glm::vec2> markers2DRaw; // unfiltered by size, roundness
 
-
 	// Drawing 
 	//bool bDraw = false;
-
 
 	// TODO: 2D FILTER SETTINGS
 
 private:
-
-	// What is the video mode?
-	MotiveCameraMode camMode = MOTIVE_CAMERA_MODE_INVALID;
-
 
 	// also: intrinsic opencv parameters
 
 	// Get this camera's fingerprint
 	string fpt();
 
+	bool bSetupParams = false;
 };
 

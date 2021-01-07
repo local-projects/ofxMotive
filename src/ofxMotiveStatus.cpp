@@ -45,6 +45,16 @@ bool MotiveStatus::ApplyContinuousCalibrationResult() {
 // --------------------------------------------------------------
 void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 
+	// Update the misalignment flags for each camera
+	updateCameraMisalignmentFlags(recon, cams);
+
+	// Lastly, check if the calibration file is empty. 
+	updateEmptyCalibrationFlags(cams);
+}
+
+// --------------------------------------------------------------
+void MotiveStatus::updateCameraMisalignmentFlags(MotiveReconstruction& recon, MotiveCameraSet& cams) {
+
 	uint64_t thisTime = ofGetElapsedTimeMillis();
 
 	// Get all active cameras
@@ -100,20 +110,20 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 		int contr = camContr[c->index];
 		//int notContr = total - contr;
 		int missing = camMissing[c->index];
-		
+
 		// Check if these counts indicate that this camera might be out of alignment
 		if (counter->bInit) {
 			// Is the camera possibly out of alignment?
 			bool tmp = (missing > 0) && (contr == 0) && (total >= counter->total);
 
 			// This bool may be noisy, so ease it.
-			c->avgFlagPossibleMisalignment = glm::mix(float(tmp), 
-				c->avgFlagPossibleMisalignment, convertEaseParam(cameraFlagEase,60,c->frameRate));
+			c->avgFlagPossibleMisalignment = glm::mix(float(tmp),
+				c->avgFlagPossibleMisalignment, convertEaseParam(cameraFlagEase, 60, c->frameRate));
 
 			// Flag whether this is out of alignment, based on eased data
 			c->flagPossibleMisalignment = c->avgFlagPossibleMisalignment >= cameraFlagThreshold;
 		}
-		
+
 		// Mark this time of possible misalignment
 		if (c->flagPossibleMisalignment) c->lastPossibleMisalignmentTimeMS = thisTime;
 
@@ -147,11 +157,11 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 		for (auto& c : activeCams) maxTime = max(maxTime, c->lastPossibleMisalignmentTimeMS);
 
 		// Were any of the cameras possibly recently misaligned?
-		bool bCameraPossiblyRecentlyMisaligned = (maxTime != 0 && 
+		bool bCameraPossiblyRecentlyMisaligned = (maxTime != 0 &&
 			(float(thisTime - maxTime) / 1000.0 <= fusionTimeoutSec));
 		// Was the system possibly recently in need of re-calibration?
 		bool bSystemPossiblyRecentlyNeedsCalibration = (lastContinuousCalibrationCalledTimeMS != 0
-			&& (float(thisTime - lastContinuousCalibrationCalledTimeMS)/1000.0 <= fusionTimeoutSec));
+			&& (float(thisTime - lastContinuousCalibrationCalledTimeMS) / 1000.0 <= fusionTimeoutSec));
 
 		switch (fusionMode) {
 		case FUSE_SYSTEM_AND_CAMERAS: {
@@ -164,8 +174,8 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 
 				// ... Appropriate cameras need recalibration.
 				for (auto& c : activeCams) {
-					c->flagPossibleMisalignment = (c->lastPossibleMisalignmentTimeMS != 0) 
-						&& (float(thisTime - c->lastPossibleMisalignmentTimeMS) / 1000.0 <= fusionTimeoutSec);					
+					c->flagPossibleMisalignment = (c->lastPossibleMisalignmentTimeMS != 0)
+						&& (float(thisTime - c->lastPossibleMisalignmentTimeMS) / 1000.0 <= fusionTimeoutSec);
 				}
 			}
 
@@ -181,7 +191,7 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 				// ... Appropriate cameras need recalibration.
 				if (bCameraPossiblyRecentlyMisaligned) {
 					for (auto& c : activeCams) {
-						c->flagPossibleMisalignment = (c->lastPossibleMisalignmentTimeMS != 0) 
+						c->flagPossibleMisalignment = (c->lastPossibleMisalignmentTimeMS != 0)
 							&& (float(thisTime - c->lastPossibleMisalignmentTimeMS) / 1000.0 <= fusionTimeoutSec);
 					}
 				}
@@ -194,6 +204,38 @@ void MotiveStatus::update(MotiveReconstruction& recon, MotiveCameraSet& cams) {
 }
 
 // --------------------------------------------------------------
+void MotiveStatus::updateEmptyCalibrationFlags(MotiveCameraSet& _cams) {
+
+	// Update flag
+	bMaybeEmptyCalibration = isCalibrationEmpty(_cams);
+
+	// If maybe empty, flag all cameras as misaligned
+	if (bMaybeEmptyCalibration) {
+		auto activeCams = _cams.getActiveCameras();
+		for (auto& c : activeCams) c->flagPossibleMisalignment = true;
+	}
+}
+
+// --------------------------------------------------------------
+bool MotiveStatus::isCalibrationEmpty(MotiveCameraSet& _cams, float epsilon) {
+
+	// Get all active cams
+	auto cams = _cams.getActiveCameras();
+
+	// There must be cams to proceed
+	if (cams.size() == 0) return false;
+
+	// Check all cameras' positions.
+	// If they are in a line, then return true.
+	glm::vec3 sumPositions = glm::vec3(0, 0, 0);
+	for (auto& c : cams) sumPositions += c->position;
+	int nEmptyAxes = 0;
+	for (int i = 0; i < 3; i++) {
+		if (abs(sumPositions[i]) <= epsilon) nEmptyAxes++;
+	}
+	// Calibration is empty if two (or more) axes are zero.
+	return nEmptyAxes >= 2;
+}
 
 // --------------------------------------------------------------
 
