@@ -14,6 +14,10 @@ public:
 
 	// Setup params for the RUI per camera
 	void setupParams();
+	// TODO: Disabling parameters works with RUI, but RUI does not allow
+	// parameter groups to be disabled. As a result, this function does not
+	// currently work as intended.
+	//void disableParams();
 
 
 	// ====================================
@@ -94,5 +98,6 @@ private:
 	// Get this camera's fingerprint
 	string fpt();
 
+	bool bSetupParams = false;
 };
 
