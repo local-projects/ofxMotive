@@ -14,7 +14,10 @@ public:
 
 	// Setup params for the RUI per camera
 	void setupParams();
-	void disableParams();
+	// TODO: Disabling parameters works with RUI, but RUI does not allow
+	// parameter groups to be disabled. As a result, this function does not
+	// currently work as intended.
+	//void disableParams();
 
 
 	// ====================================

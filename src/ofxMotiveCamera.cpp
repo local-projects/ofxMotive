@@ -13,6 +13,7 @@ MotiveCamera::~MotiveCamera() {
 // -----------------------------------------------------------
 void MotiveCamera::setupParams() {
 
+	// Don't setup the same params twice
 	if (bSetupParams) return;
 
 	RUI_NEW_GROUP("ofxMotive Camera " + ofToString(serial));
@@ -29,18 +30,18 @@ void MotiveCamera::setupParams() {
 }
 
 // -----------------------------------------------------------
-void MotiveCamera::disableParams() {
-
-	if (!bSetupParams) return;
-	
-	//RUI_NEW_GROUP("ofxMotive Camera " + ofToString(serial));
-	RUI_REMOVE_PARAM_WCN("ID " + fpt());
-	RUI_REMOVE_PARAM_WCN("Connected " + fpt());
-	MotiveCameraSettings::unshareParams(fpt());
-	RUI_REMOVE_PARAM_WCN("Push camera settings " + fpt());
-
-	bSetupParams = false;
-}
+//void MotiveCamera::disableParams() {
+//
+//	if (!bSetupParams) return;
+//	
+//	//RUI_NEW_GROUP("ofxMotive Camera " + ofToString(serial));
+//	RUI_REMOVE_PARAM_WCN("ID " + fpt());
+//	RUI_REMOVE_PARAM_WCN("Connected " + fpt());
+//	MotiveCameraSettings::unshareParams(fpt());
+//	RUI_REMOVE_PARAM_WCN("Push camera settings " + fpt());
+//
+//	bSetupParams = false;
+//}
 
 // -----------------------------------------------------------
 void MotiveCamera::clearFrameData() {
