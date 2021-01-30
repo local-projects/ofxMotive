@@ -392,8 +392,8 @@ void ofxMotive::threadedFunction() {
 				if (initialize()) {
 					ofLogNotice("ofxMotive") << "Motive has connected";
 					setState(MOTIVE_CONNECTED);
-					loadProfile(); // load profile
 					loadCalibration();
+					loadProfile(); // load profile
 					update(); // init camera list
 				}
 			}
