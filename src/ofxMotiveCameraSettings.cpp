@@ -64,16 +64,17 @@ int MotiveCameraSettings::getTTVideoType() {
 }
 
 // -----------------------------------------------------------
-void MotiveCameraSettings::copySettingsFrom(MotiveCameraSettings& a) {
+void MotiveCameraSettings::copySettingsFrom(MotiveCameraSettings& a, int mask) {
 
-	camState = a.camState;
-	exposure = a.exposure;
-	threshold = a.threshold;
-	intensity = a.intensity;
-	frameRate = a.frameRate;
-	imagerGain = a.imagerGain;
-	camMode = a.camMode;
-	mjpegQuality = a.mjpegQuality;
+	int i = -1;
+	if ((mask & (1 << ++i)) >> i) camState = a.camState;
+	if ((mask & (1 << ++i)) >> i) exposure = a.exposure;
+	if ((mask & (1 << ++i)) >> i) threshold = a.threshold;
+	if ((mask & (1 << ++i)) >> i) intensity = a.intensity;
+	if ((mask & (1 << ++i)) >> i) frameRate = a.frameRate;
+	if ((mask & (1 << ++i)) >> i) imagerGain = a.imagerGain;
+	if ((mask & (1 << ++i)) >> i) camMode = a.camMode;
+	if ((mask & (1 << ++i)) >> i) mjpegQuality = a.mjpegQuality;
 }
 
 // -----------------------------------------------------------

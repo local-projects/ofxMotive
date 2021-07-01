@@ -83,9 +83,33 @@ bool MotiveCamera::pushSettings() {
 	// set mask
 	// save a frame
 
-	RUI_PUSH_TO_CLIENT();
+	RUI_PUSH_TO_CLIENT(); // TODO: batch push
 
 	return success;
+}
+
+// -----------------------------------------------------------
+bool MotiveCamera::pullSettings() {
+
+	// camera state
+	bool bSuccess = TT_CameraState(index, camState);
+	if (!bSuccess) ofLogNotice("ofxMotive : Camera " + ofToString(serial)) << "Could not retrieve camera state.";
+	// frame rate
+	frameRate = TT_CameraFrameRate(index);
+	// video type
+	setTTVideoType(TT_CameraVideoType(index));
+	// exposure
+	exposure = TT_CameraExposure(index);
+	// threshold
+	threshold = TT_CameraThreshold(index);
+	// intensity
+	intensity = TT_CameraIntensity(index);
+	// imager gain
+	imagerGain = TT_CameraImagerGain(index);
+
+	RUI_PUSH_TO_CLIENT(); // TODO: batch push
+
+	return bSuccess;
 }
 
 // -----------------------------------------------------------

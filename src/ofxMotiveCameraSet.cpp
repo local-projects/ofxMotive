@@ -26,6 +26,7 @@ void MotiveCameraSet::setupParams() {
 	// Setup template camera params
 	RUI_NEW_GROUP("ofxMotive Camera Set");
 	RUI_SHARE_PARAM_WCN("Init Cams With Defaults", bInitWithDefaults);
+	RUI_SHARE_PARAM_WCN("Init Cams With Defaults Mask", bInitWithDefaultsMask, 0, 255);
 	RUI_SHARE_PARAM_WCN("Push Defaults to All Cams", bPushDefaults);
 	defaultCameraSettings.shareParams("[DEFAULT]");
 
@@ -132,42 +133,36 @@ void MotiveCameraSet::update() {
 		cam->index = serial2Index[cam->serial];
 		cam->name = TT_CameraName(cam->index);
 		cam->ID = TT_CameraID(cam->index);
-		// camera state
-		TT_CameraState(cam->index, cam->camState);
 		// pixel resolution
 		int width, height;
 		if (TT_CameraPixelResolution(cam->index, width, height)) {
 			cam->resolution.x = width;
 			cam->resolution.y = height;
 		}
-		// frame rate
-		cam->frameRate = TT_CameraFrameRate(cam->index);
-		// video type
-		cam->setTTVideoType(TT_CameraVideoType(cam->index));
-		// exposure
-		cam->exposure = TT_CameraExposure(cam->index);
-		// threshold
-		cam->threshold = TT_CameraThreshold(cam->index);
-		// intensity
-		cam->intensity = TT_CameraIntensity(cam->index);
-		// imager gain
-		cam->imagerGain = TT_CameraImagerGain(cam->index);
+		// imager gain levels
 		cam->imagerGainLevels = TT_CameraImagerGainLevels(cam->index);
 		// mask settings
 
 		// Create new parameter groups
+		// This also loads the last settings from file
 		cam->setupParams();
 
 		// If we're initializing the cameras with defaults, then 
-		// set the default settable params and push.
-		if (bInitWithDefaults) {
-			cam->copySettingsFrom(defaultCameraSettings);
-			cam->pushSettings();
-		}
+		// set the default settable params.
+		if (bInitWithDefaults) 
+			cam->copySettingsFrom(defaultCameraSettings, bInitWithDefaultsMask);
+		
+		// Push the camera settings, loaded from file and defaults
+		cam->pushSettings();
+
+		// Pull camera settings in case they didn't stick
+		cam->pullSettings();
 
 		ofLogNotice("ofxMotive : Camera Set") << "Adding new camera " << cam->serial << 
 			(bInitWithDefaults ? " with default settings" : "");
 	}
+	// If any new cameras were updated, push pulled settings to the client
+	//if (newCams.size() > 0) RUI_PUSH_TO_CLIENT();
 	
 	// Update settings for all cameras, if need be
 	if (bPushDefaults) {
@@ -175,7 +170,7 @@ void MotiveCameraSet::update() {
 		RUI_PUSH_TO_CLIENT();
 		for (int i = 0; i < activeCams.size(); i++) {
 			MotiveCamera* cam = getCamera(activeCams[i]);
-			cam->copySettingsFrom(defaultCameraSettings);
+			cam->copySettingsFrom(defaultCameraSettings, bInitWithDefaultsMask);
 			cam->pushSettings();
 		}
 		ofLogNotice("ofxMotive : Camera Set") << "Pushed default settings to all cameras";

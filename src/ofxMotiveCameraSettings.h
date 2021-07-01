@@ -26,7 +26,8 @@ public:
 	void unshareParams(string fpt = "");
 
 	// Copy settings from another object
-	void copySettingsFrom(MotiveCameraSettings& a);
+	// Provide an optional mask that indicates which settings to copy.
+	void copySettingsFrom(MotiveCameraSettings& a, int mask = 255);
 
 	// ====================================
 	// SETTABLE PARAMETERS

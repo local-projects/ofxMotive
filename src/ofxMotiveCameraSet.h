@@ -62,6 +62,17 @@ private:
 	MotiveCameraSettings defaultCameraSettings;
 	// Should new cameras be initialized with these default settings?
 	bool bInitWithDefaults = false;
+	// Which default settings should be used? Use an integer (binary) mask
+	// that is the sum of the following powers of 2:
+	// 1 = init camera state
+	// 2 = init exposure
+	// 4 = init threshold
+	// 8 = init intensity
+	// 16 = init framerate
+	// 32 = init imager gain
+	// 64 = init camera mode
+	// 128 = mjpeg quality
+	int bInitWithDefaultsMask = 255;
 	// Should we push default settings to all cams at any point in time?
 	bool bPushDefaults = false;
 };

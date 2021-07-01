@@ -70,6 +70,9 @@ public:
 	bool pushSettings();
 	bool bPushSettings = false;
 
+	// This pulls settings from the camera and updates local params in RUI
+	bool pullSettings();
+
 
 	// ====================================
 	// MISC HELPERS
